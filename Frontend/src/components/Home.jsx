@@ -58,7 +58,7 @@ function Home() {
 
 
       <div className='HomeBottom bg-red-100 h-[70vh]'>
-
+        <h1>Third is the third Box</h1>
       </div>
 
 
