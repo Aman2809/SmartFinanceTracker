@@ -1,10 +1,16 @@
 package com.project.backend.model;
 
+import java.util.List;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +22,7 @@ public class User {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     
     @Column(name="UserName" , nullable=false , length=100)
     private String username;
@@ -26,15 +32,22 @@ public class User {
     
     
     private String password;
+    
+    
+    
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FinancialGoals> financialGoals;
+    
+    
+    public Long getUserId() {
+		return userId;
+	}
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+    
 
     public String getUsername() {
         return username;
@@ -59,5 +72,19 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	 
+
+		
+
+		public void setFinancialGoals(List<FinancialGoals> financialGoals) {
+			this.financialGoals = financialGoals;
+		}
+
+		public List<FinancialGoals> getFinancialGoals() {
+			return financialGoals;
+		}
+
+		
 }
 
