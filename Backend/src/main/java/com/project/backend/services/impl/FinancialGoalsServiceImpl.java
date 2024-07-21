@@ -20,6 +20,7 @@ import com.project.backend.services.FinancialGoalsService;
 import org.springframework.data.domain.Pageable;
 
 
+
 @Service
 public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 
@@ -52,13 +53,15 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	        financialGoals.setDescription(goalDto.getDescription());
 	        financialGoals.setTargetAmount(goalDto.getTargetAmount());
 	        financialGoals.setCurrentAmount(goalDto.getCurrentAmount());
-	    
+
+
 	        
 	        FinancialGoals updatedGoal = this.financialGoalsRepository.save(financialGoals);
 	        FinancialGoalsDto goalsDto1=goalTogoalDto(updatedGoal);
 	        return goalsDto1;
 	        
 	    }
+
 
 
 	 @Override
@@ -68,9 +71,11 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	                .collect(Collectors.toList());
 	    }
 
+
 	@Override
 	public FinancialGoalsDto getFinancialGoalById(Long id) {
 		FinancialGoals financialGoals = this.financialGoalsRepository.findById(id)
+
 				.orElseThrow(()-> new ResourceNotFoundException("FinancialGoals"," Id",id));
 		
 		return this.goalTogoalDto(financialGoals);
@@ -87,6 +92,7 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 		
 	   List<FinancialGoalsDto> financialGoalsDto = allGoals.stream().map((goal)-> this.modelMapper.map(goal,FinancialGoalsDto.class)).collect(Collectors.toList());
 	   return financialGoalsDto;
+
 	}
 
 	@Override

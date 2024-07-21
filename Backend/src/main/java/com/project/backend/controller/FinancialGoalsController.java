@@ -32,6 +32,7 @@ public class FinancialGoalsController {
 	
 	
 	//POST -add  Goals
+
 	 @PostMapping("/user/{userId}/financial-goals")
 	    public ResponseEntity<FinancialGoalsDto> createFinancialGoal(@Valid @RequestBody FinancialGoalsDto goalsDto, @PathVariable Long userId) {
 	        FinancialGoalsDto createdGoal = this.financialGoalService.createFinancialGoal(goalsDto,userId);
@@ -43,11 +44,13 @@ public class FinancialGoalsController {
 	 public ResponseEntity<FinancialGoalsDto> updateFinancialGoal(@Valid @RequestBody FinancialGoalsDto goalDto,@PathVariable Long goalsId){
 		 
 		 FinancialGoalsDto updatdFinancialGoals = this.financialGoalService.updateFinancialGoal(goalDto, goalsId);
+
 		 
 		 return ResponseEntity.ok(updatdFinancialGoals);
 	 }
 	 
 	 
+
 	 // Get financial goals by user ID
 	 @GetMapping("/user/{userId}/financial-goals")
 	    public ResponseEntity<List<FinancialGoalsDto>> getFinancialGoalsByUserId(@PathVariable Long userId) {
@@ -70,14 +73,17 @@ public class FinancialGoalsController {
 			 
 			 
 			 return ResponseEntity.ok(this.financialGoalService.getAllGoals( pageNumber,  pageSize));
+
 		 }
 		 
 		 
 		 
 		//Delete Goals -->Delete
+
 			@DeleteMapping("/financial-goals/{goalsId}")
 			public ApiResponse deleteFinancialGoal(@PathVariable Long goalsId){
 				this.financialGoalService.deleteFinancialGoal(goalsId);
 				return new ApiResponse("goal Deleted Successfully" , true);
+
 			}
 }
