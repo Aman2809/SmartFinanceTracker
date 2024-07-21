@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.payloads.ApiResponse;
@@ -22,7 +23,7 @@ import com.project.backend.services.FinancialGoalsService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/financial-goals")
+@RequestMapping("/api/")
 public class FinancialGoalsController {
 	
 	@Autowired
@@ -31,51 +32,58 @@ public class FinancialGoalsController {
 	
 	
 	//POST -add  Goals
-	 @PostMapping("/")
-	    public ResponseEntity<FinancialGoalsDto> createFinancialGoal(@Valid @RequestBody FinancialGoalsDto goalsDto) {
-	        FinancialGoalsDto createdGoal = this.financialGoalService.createFinancialGoal(goalsDto);
-	        return ResponseEntity.ok(createdGoal);
+
+	 @PostMapping("/user/{userId}/financial-goals")
+	    public ResponseEntity<FinancialGoalsDto> createFinancialGoal(@Valid @RequestBody FinancialGoalsDto goalsDto, @PathVariable Long userId) {
+	        FinancialGoalsDto createdGoal = this.financialGoalService.createFinancialGoal(goalsDto,userId);
+	        return new ResponseEntity<FinancialGoalsDto>(createdGoal,HttpStatus.CREATED);
 	    }
 	
 	 //PUT - update Goals
-	 @PutMapping("/{id}")
-	 public ResponseEntity<FinancialGoalsDto> updateFinancialGoal(@Valid @RequestBody FinancialGoalsDto goalDto,@PathVariable Long id){
+	 @PutMapping("/financial-goals/{goalsId}")
+	 public ResponseEntity<FinancialGoalsDto> updateFinancialGoal(@Valid @RequestBody FinancialGoalsDto goalDto,@PathVariable Long goalsId){
 		 
-		 FinancialGoalsDto updatdFinancialGoals = this.financialGoalService.updateFinancialGoal(goalDto, id);
+		 FinancialGoalsDto updatdFinancialGoals = this.financialGoalService.updateFinancialGoal(goalDto, goalsId);
+
 		 
 		 return ResponseEntity.ok(updatdFinancialGoals);
 	 }
 	 
 	 
-	 //GET -- get by userId
-		 @GetMapping("/{userId}")
-		    public ResponseEntity<FinancialGoalsDto> getFinancialGoalsByUserId(@PathVariable String userId) {
 
-		        return ResponseEntity.ok (this.financialGoalService.getFinancialGoalsByUserId(userId));
-		    }
+	 // Get financial goals by user ID
+	 @GetMapping("/user/{userId}/financial-goals")
+	    public ResponseEntity<List<FinancialGoalsDto>> getFinancialGoalsByUserId(@PathVariable Long userId) {
+	        List<FinancialGoalsDto> goals = this.financialGoalService.getFinancialGoalsByUserId(userId);
+	        return new ResponseEntity<List<FinancialGoalsDto>>(goals,HttpStatus.OK);
+	    }
 		 
 		 
 		 //GET -- get by id
-		 @GetMapping("/{id}")
-		    public ResponseEntity<FinancialGoalsDto> getFinancialGoalById(@PathVariable Long id) {
+		 @GetMapping("/financial-goals/{goalsId}")
+		    public ResponseEntity<FinancialGoalsDto> getFinancialGoalById(@PathVariable Long goalsId) {
 
-		        return ResponseEntity.ok (this.financialGoalService.getFinancialGoalById(id));
+		        return ResponseEntity.ok(this.financialGoalService.getFinancialGoalById(goalsId));
 		    }
 		 
 		 //GET -- all Goals
-		 @GetMapping("/")
-		 public ResponseEntity<List<FinancialGoalsDto>> getAllGoals(){
+		 @GetMapping("/financial-goals")
+		 public ResponseEntity<List<FinancialGoalsDto>> getAllGoals(@RequestParam(value="pageNumber",defaultValue="0",required=false)Integer pageNumber,
+				 @RequestParam(value="pageSize",defaultValue="5",required=false)Integer pageSize){
 			 
 			 
-			 return ResponseEntity.ok(this.financialGoalService.getAllGoals());
+			 return ResponseEntity.ok(this.financialGoalService.getAllGoals( pageNumber,  pageSize));
+
 		 }
 		 
 		 
 		 
 		//Delete Goals -->Delete
-			@DeleteMapping("/{id}")
-			public ResponseEntity<ApiResponse> deleteFinancialGoal(@PathVariable Long id){
-				this.financialGoalService.deleteFinancialGoal(id);
-				return new ResponseEntity<ApiResponse>(new ApiResponse("goal Deleted Successfully" , true) , HttpStatus.OK);
+
+			@DeleteMapping("/financial-goals/{goalsId}")
+			public ApiResponse deleteFinancialGoal(@PathVariable Long goalsId){
+				this.financialGoalService.deleteFinancialGoal(goalsId);
+				return new ApiResponse("goal Deleted Successfully" , true);
+
 			}
 }

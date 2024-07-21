@@ -1,5 +1,7 @@
 package com.project.backend.payloads;
 
+import com.project.backend.model.User;
+
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,10 +33,7 @@ public class FinancialGoalsDto {
 		 @DecimalMin("0.0")
 	    private double currentAmount;
 	    
-		
-		@NotEmpty
-		@Size(min=3,message="description name must be of minimum 3 character !! ")
-	    private String userId;
+		private UserDto user;
 	    
 
 }

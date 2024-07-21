@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +25,11 @@ public class FinancialGoals {
     private String description;
     private double targetAmount;
     private double currentAmount;
-    private String userId;
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     
     
 	
@@ -57,12 +63,15 @@ public class FinancialGoals {
 	public void setCurrentAmount(double currentAmount) {
 		this.currentAmount = currentAmount;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	
+	
+	 public User getUser() {
+	        return user;
+	    }
+
+	    public void setUser(User user) {
+	        this.user = user;
+	    }
 	
 
     
