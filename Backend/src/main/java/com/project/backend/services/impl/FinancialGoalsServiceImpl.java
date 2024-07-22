@@ -1,7 +1,6 @@
 package com.project.backend.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -13,7 +12,7 @@ import com.project.backend.exceptions.ResourceNotFoundException;
 import com.project.backend.model.FinancialGoals;
 import com.project.backend.model.User;
 import com.project.backend.payloads.FinancialGoalsDto;
-import com.project.backend.payloads.UserDto;
+import com.project.backend.payloads.GoalsResponse;
 import com.project.backend.repository.FinancialGoalsRepository;
 import com.project.backend.repository.UserRepository;
 import com.project.backend.services.FinancialGoalsService;
@@ -65,10 +64,25 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 
 
 	 @Override
-	    public List<FinancialGoalsDto> getFinancialGoalsByUserId(Long userId) {
-	        List<FinancialGoals> goals = this.financialGoalsRepository.findByUser_UserId(userId);
-	        return goals.stream().map(goal -> modelMapper.map(goal, FinancialGoalsDto.class))
+	    public GoalsResponse getFinancialGoalsByUserId(Long userId, Integer PageNumber, Integer pageSize) {
+		 
+		 Pageable p= PageRequest.of(PageNumber, pageSize);
+	        Page<FinancialGoals> pageGoals = this.financialGoalsRepository.findByUser_UserId(userId,p);
+	        
+	        List<FinancialGoals> goals = pageGoals.getContent();
+	        
+	        List<FinancialGoalsDto> financialGoalsDto =  goals.stream().map(goal -> modelMapper.map(goal, FinancialGoalsDto.class))
 	                .collect(Collectors.toList());
+	        
+	        GoalsResponse goalsResponse=new GoalsResponse();
+	        goalsResponse.setGoalsContent(financialGoalsDto);
+	 	   goalsResponse.setPageNumber(pageGoals.getNumber());
+	 	   goalsResponse.setPageSize(pageGoals.getSize());
+	 	   goalsResponse.setTotalElement(pageGoals.getTotalElements());
+	 	   goalsResponse.setTotalPages(pageGoals.getTotalPages());
+	 	   goalsResponse.setLastPage(pageGoals.isLast());
+	        
+	        return goalsResponse;
 	    }
 
 
@@ -82,7 +96,7 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	}
 	
 	@Override
-	public List<FinancialGoalsDto> getAllGoals(Integer pageNumber , Integer pageSize) {
+	public GoalsResponse getAllGoals(Integer pageNumber , Integer pageSize) {
 		
 		Pageable p = PageRequest.of(pageNumber, pageSize);
 		
@@ -91,7 +105,16 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 		List<FinancialGoals> allGoals = pageGoals.getContent();
 		
 	   List<FinancialGoalsDto> financialGoalsDto = allGoals.stream().map((goal)-> this.modelMapper.map(goal,FinancialGoalsDto.class)).collect(Collectors.toList());
-	   return financialGoalsDto;
+	   
+	   GoalsResponse goalsResponse = new GoalsResponse();
+	   
+	   goalsResponse.setGoalsContent(financialGoalsDto);
+	   goalsResponse.setPageNumber(pageGoals.getNumber());
+	   goalsResponse.setPageSize(pageGoals.getSize());
+	   goalsResponse.setTotalElement(pageGoals.getTotalElements());
+	   goalsResponse.setTotalPages(pageGoals.getTotalPages());
+	   goalsResponse.setLastPage(pageGoals.isLast());
+	   return goalsResponse;
 
 	}
 

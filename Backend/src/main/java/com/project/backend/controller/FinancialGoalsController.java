@@ -1,6 +1,6 @@
 package com.project.backend.controller;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.payloads.ApiResponse;
 import com.project.backend.payloads.FinancialGoalsDto;
-import com.project.backend.payloads.UserDto;
+import com.project.backend.payloads.GoalsResponse;
 import com.project.backend.services.FinancialGoalsService;
 
 import jakarta.validation.Valid;
@@ -53,9 +53,13 @@ public class FinancialGoalsController {
 
 	 // Get financial goals by user ID
 	 @GetMapping("/user/{userId}/financial-goals")
-	    public ResponseEntity<List<FinancialGoalsDto>> getFinancialGoalsByUserId(@PathVariable Long userId) {
-	        List<FinancialGoalsDto> goals = this.financialGoalService.getFinancialGoalsByUserId(userId);
-	        return new ResponseEntity<List<FinancialGoalsDto>>(goals,HttpStatus.OK);
+	    public ResponseEntity<GoalsResponse> getFinancialGoalsByUserId(@PathVariable Long userId,
+	    		@RequestParam(value="pageNumber",defaultValue="0",required=false)Integer pageNumber,
+				 @RequestParam(value="pageSize",defaultValue="5",required=false)Integer pageSize) {
+		 
+		 
+	        GoalsResponse goals = this.financialGoalService.getFinancialGoalsByUserId(userId , pageNumber, pageSize);
+	        return new ResponseEntity<GoalsResponse>(goals,HttpStatus.OK);
 	    }
 		 
 		 
@@ -68,11 +72,13 @@ public class FinancialGoalsController {
 		 
 		 //GET -- all Goals
 		 @GetMapping("/financial-goals")
-		 public ResponseEntity<List<FinancialGoalsDto>> getAllGoals(@RequestParam(value="pageNumber",defaultValue="0",required=false)Integer pageNumber,
+		 public ResponseEntity<GoalsResponse> getAllGoals(@RequestParam(value="pageNumber",defaultValue="0",required=false)Integer pageNumber,
 				 @RequestParam(value="pageSize",defaultValue="5",required=false)Integer pageSize){
 			 
 			 
-			 return ResponseEntity.ok(this.financialGoalService.getAllGoals( pageNumber,  pageSize));
+			 GoalsResponse allGoals=this.financialGoalService.getAllGoals( pageNumber,  pageSize);
+			 
+			 return new ResponseEntity<GoalsResponse>(allGoals,HttpStatus.OK);
 
 		 }
 		 

@@ -1,10 +1,9 @@
 package com.project.backend.services;
 
 
-import java.util.List;
-import java.util.Optional;
 
 import com.project.backend.payloads.FinancialGoalsDto;
+import com.project.backend.payloads.GoalsResponse;
 
 public interface FinancialGoalsService {
 
@@ -13,11 +12,11 @@ public interface FinancialGoalsService {
 	FinancialGoalsDto createFinancialGoal(FinancialGoalsDto goal,Long userId);
 	FinancialGoalsDto updateFinancialGoal(FinancialGoalsDto goal,Long id);
 	
-	List<FinancialGoalsDto> getFinancialGoalsByUserId(Long userId);
+	GoalsResponse getFinancialGoalsByUserId(Long userId , Integer pageNumber, Integer pageSize);
 	 
 	 FinancialGoalsDto getFinancialGoalById(Long id);
 	 
-	 List<FinancialGoalsDto> getAllGoals(Integer pageNumber , Integer pageSize);
+	 GoalsResponse getAllGoals(Integer pageNumber , Integer pageSize);
 
 	
 	 void deleteFinancialGoal(Long id);
