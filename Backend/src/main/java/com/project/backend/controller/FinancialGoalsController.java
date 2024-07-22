@@ -2,6 +2,8 @@ package com.project.backend.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.backend.configuration.AppConstraints;
 import com.project.backend.payloads.ApiResponse;
 import com.project.backend.payloads.FinancialGoalsDto;
 import com.project.backend.payloads.GoalsResponse;
@@ -54,11 +57,13 @@ public class FinancialGoalsController {
 	 // Get financial goals by user ID
 	 @GetMapping("/user/{userId}/financial-goals")
 	    public ResponseEntity<GoalsResponse> getFinancialGoalsByUserId(@PathVariable Long userId,
-	    		@RequestParam(value="pageNumber",defaultValue="0",required=false)Integer pageNumber,
-				 @RequestParam(value="pageSize",defaultValue="5",required=false)Integer pageSize) {
+	    		 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
+				 @RequestParam(value="pageSize",defaultValue=AppConstraints.PAGE_SIZE,required=false)Integer pageSize,
+				 @RequestParam(value="sortBy",defaultValue=AppConstraints.SORT_BY,required=false)String sortBy,
+				 @RequestParam(value="sortDir",defaultValue=AppConstraints.SORT_DIR,required=false)String sortDir) {
 		 
 		 
-	        GoalsResponse goals = this.financialGoalService.getFinancialGoalsByUserId(userId , pageNumber, pageSize);
+	        GoalsResponse goals = this.financialGoalService.getFinancialGoalsByUserId(userId , pageNumber, pageSize,sortBy,sortDir);
 	        return new ResponseEntity<GoalsResponse>(goals,HttpStatus.OK);
 	    }
 		 
@@ -72,11 +77,14 @@ public class FinancialGoalsController {
 		 
 		 //GET -- all Goals
 		 @GetMapping("/financial-goals")
-		 public ResponseEntity<GoalsResponse> getAllGoals(@RequestParam(value="pageNumber",defaultValue="0",required=false)Integer pageNumber,
-				 @RequestParam(value="pageSize",defaultValue="5",required=false)Integer pageSize){
+		 public ResponseEntity<GoalsResponse> getAllGoals(
+				 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
+				 @RequestParam(value="pageSize",defaultValue=AppConstraints.PAGE_SIZE,required=false)Integer pageSize,
+				 @RequestParam(value="sortBy",defaultValue=AppConstraints.SORT_BY,required=false)String sortBy,
+				 @RequestParam(value="sortDir",defaultValue=AppConstraints.SORT_DIR,required=false)String sortDir){
 			 
 			 
-			 GoalsResponse allGoals=this.financialGoalService.getAllGoals( pageNumber,  pageSize);
+			 GoalsResponse allGoals=this.financialGoalService.getAllGoals( pageNumber,  pageSize,sortBy,sortDir);
 			 
 			 return new ResponseEntity<GoalsResponse>(allGoals,HttpStatus.OK);
 
@@ -91,5 +99,16 @@ public class FinancialGoalsController {
 				this.financialGoalService.deleteFinancialGoal(goalsId);
 				return new ApiResponse("goal Deleted Successfully" , true);
 
+			}
+			
+			
+			//searching
+			@GetMapping("/financial-goals/search/{keywords}")
+			public ResponseEntity<List<FinancialGoalsDto>> searchGoalsByTitle(
+					@PathVariable String keywords){
+				
+				List<FinancialGoalsDto> result = this.financialGoalService.searchGoals(keywords);
+				return new ResponseEntity<List<FinancialGoalsDto>>(result,HttpStatus.OK);
+				
 			}
 }

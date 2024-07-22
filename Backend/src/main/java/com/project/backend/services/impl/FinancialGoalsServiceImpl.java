@@ -17,6 +17,7 @@ import com.project.backend.repository.FinancialGoalsRepository;
 import com.project.backend.repository.UserRepository;
 import com.project.backend.services.FinancialGoalsService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 
 
@@ -64,9 +65,17 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 
 
 	 @Override
-	    public GoalsResponse getFinancialGoalsByUserId(Long userId, Integer PageNumber, Integer pageSize) {
+	    public GoalsResponse getFinancialGoalsByUserId(Long userId, Integer pageNumber, Integer pageSize,String sortBy,String sortDir) {
 		 
-		 Pageable p= PageRequest.of(PageNumber, pageSize);
+		 Sort sort=null;
+			if(sortDir.equalsIgnoreCase("asc")) {
+				sort=Sort.by(sortBy).ascending();
+			}
+			else {
+				sort=Sort.by(sortBy).descending();
+			}
+		 
+		 Pageable p= PageRequest.of(pageNumber, pageSize, sort);
 	        Page<FinancialGoals> pageGoals = this.financialGoalsRepository.findByUser_UserId(userId,p);
 	        
 	        List<FinancialGoals> goals = pageGoals.getContent();
@@ -96,9 +105,17 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	}
 	
 	@Override
-	public GoalsResponse getAllGoals(Integer pageNumber , Integer pageSize) {
+	public GoalsResponse getAllGoals(Integer pageNumber , Integer pageSize,String sortBy,String sortDir) {
 		
-		Pageable p = PageRequest.of(pageNumber, pageSize);
+		Sort sort=null;
+		if(sortDir.equalsIgnoreCase("asc")) {
+			sort=Sort.by(sortBy).ascending();
+		}
+		else {
+			sort=Sort.by(sortBy).descending();
+		}
+		
+		Pageable p = PageRequest.of(pageNumber, pageSize, sort);
 		
 		Page<FinancialGoals> pageGoals = this.financialGoalsRepository.findAll(p);
 		
@@ -142,6 +159,13 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 		
 		return financialGoalsDto;
 		
+	}
+
+	@Override
+	public List<FinancialGoalsDto> searchGoals(String keyword) {
+		List<FinancialGoals> goals = this.financialGoalsRepository.findByNameContaining(keyword);
+		List<FinancialGoalsDto> goalsDtos = goals.stream().map((goal)->this.modelMapper.map(goal, FinancialGoalsDto.class)).collect(Collectors.toList());
+		return goalsDtos;
 	}
 
 	
