@@ -1,6 +1,6 @@
 package com.project.backend.payloads;
 
-import com.project.backend.model.User;
+
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;

@@ -31,7 +31,7 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	private FinancialGoalsRepository financialGoalsRepository;
 	
 	 @Autowired
-	    private UserRepository userRepository;
+	 private UserRepository userRepository;
 
 
 	@Override
