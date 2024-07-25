@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.configuration.AppConstraints;
+import com.project.backend.enums.ExpenseCategory;
 import com.project.backend.payloads.ApiResponse;
 import com.project.backend.payloads.ExpenseDto;
 import com.project.backend.payloads.ExpenseResponse;
@@ -60,7 +61,8 @@ public class ExpenseController {
 	}
 
 	
-	 // Get expense goals by user ID
+	 // Get expense by user Id
+	
 	 @GetMapping("/user/{userId}/expenses")
 	    public ResponseEntity<ExpenseResponse> getExpenseByUser(@PathVariable Long userId,
 	    		 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
@@ -73,11 +75,18 @@ public class ExpenseController {
 	        return new ResponseEntity<ExpenseResponse>(goals,HttpStatus.OK);
 	    }
 	 
-	 // GET --> get expenses by category
+	// GET --> get Expenses by User and Category
 	 
-	    @GetMapping("/expenses/category/{category}")
-	    public ResponseEntity<List<ExpenseDto>> getExpensesByCategory(@PathVariable String category) {
-	        List<ExpenseDto> expenses = expenseService.getByCategory(category);
+	    @GetMapping("/users/{userId}/expenses/category/{category}")
+	    public ResponseEntity<List<ExpenseDto>> getExpensesByUserAndCategory(@PathVariable Long userId, @PathVariable String category) {
+	        ExpenseCategory expenseCategory;
+	        try {
+	            expenseCategory = ExpenseCategory.valueOf(category.toUpperCase());
+	        } catch (IllegalArgumentException e) {
+	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	        }
+
+	        List<ExpenseDto> expenses = this.expenseService.getByUserAndCategory(userId, expenseCategory);
 	        return new ResponseEntity<>(expenses, HttpStatus.OK);
 	    }
 	    
@@ -115,8 +124,16 @@ public class ExpenseController {
 				@DeleteMapping("/expenses/{expenseId}")
 				public ApiResponse deleteFinancialGoal(@PathVariable Long expenseId){
 					this.expenseService.deleteExpense(expenseId);
-					return new ApiResponse("goal Deleted Successfully" , true);
+					return new ApiResponse("Expense Deleted Successfully" , true);
 
 				}
+				
+				
+				
+				@GetMapping("/expenses/categories")
+			    public ResponseEntity<ExpenseCategory[]> getExpenseCategories() {
+			        ExpenseCategory[] categories = ExpenseCategory.values();
+			        return new ResponseEntity<>(categories, HttpStatus.OK);
+			    }
 		 
 }

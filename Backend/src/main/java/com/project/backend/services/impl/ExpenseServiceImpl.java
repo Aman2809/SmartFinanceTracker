@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.project.backend.enums.ExpenseCategory;
 import com.project.backend.exceptions.ResourceNotFoundException;
 import com.project.backend.model.Expense;
 import com.project.backend.model.User;
@@ -49,22 +50,20 @@ public class ExpenseServiceImpl implements ExpenseService{
 		return savedExpenseDto;
 	}
 
-	@Override
-	public ExpenseDto updateExpense(ExpenseDto expenseDto, Long expenseId) {
-		Expense expense = this.expenseRepo.findById(expenseId)
-				.orElseThrow(()->new ResourceNotFoundException("Expense","id",expenseId));
-		
-		expense.setDescription(expenseDto.getDescription());
-		expense.setAmount(expenseDto.getAmount());
-		expense.setCategory(expenseDto.getCategory());
-		expense.setDate(expenseDto.getDate());
-		
-		Expense updatedExpense=this.expenseRepo.save(expense);
-		ExpenseDto expenseDto1= this.ExpenseToDto(updatedExpense);
-		
-		
-		return expenseDto1;
-	}
+	 @Override
+	    public ExpenseDto updateExpense(ExpenseDto expenseDto, Long expenseId) {
+	        Expense expense = this.expenseRepo.findById(expenseId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Expense", "Id", expenseId));
+	        
+	        expense.setDescription(expenseDto.getDescription());
+	        expense.setAmount(expenseDto.getAmount());
+	        expense.setDate(expenseDto.getDate());
+	        expense.setCategory(expenseDto.getCategory());
+	        
+	        Expense updatedExpense = this.expenseRepo.save(expense);
+	        return this.modelMapper.map(updatedExpense, ExpenseDto.class);
+	    }
+
 
 	@Override
 	public ExpenseResponse getExpenseByUser(Long userId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
@@ -98,13 +97,12 @@ public class ExpenseServiceImpl implements ExpenseService{
 	}
 	
 	@Override
-	public List<ExpenseDto> getByCategory(String category) {
-		List<Expense> expense = this.expenseRepo.findByCategory(category);
-		
-		return expense.stream()
-	            .map(exp->this.modelMapper.map(exp, ExpenseDto.class))
-	            .collect(Collectors.toList());
-	}
+    public List<ExpenseDto> getByUserAndCategory(Long userId, ExpenseCategory category) {
+        List<Expense> expenses = expenseRepo.findByUser_UserIdAndCategory(userId, category);
+        return expenses.stream()
+                .map(expense -> modelMapper.map(expense, ExpenseDto.class))
+                .collect(Collectors.toList());
+    }
 
 	@Override
 	public ExpenseResponse getAllExpense(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
