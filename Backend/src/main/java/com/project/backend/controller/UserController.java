@@ -32,6 +32,7 @@ public class UserController {
 	
 	@PostMapping("/")
 	public ResponseEntity<UserDto> createUser( @Valid @RequestBody UserDto userDto){
+		System.out.println("GET /api/users/ endpoint accessed");
 		
 		UserDto createUserDto=this.userService.createUser(userDto);
 		return new ResponseEntity<>(createUserDto,HttpStatus.CREATED);
