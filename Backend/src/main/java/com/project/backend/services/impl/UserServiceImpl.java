@@ -3,13 +3,19 @@ package com.project.backend.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.security.auth.login.AppConfigurationEntry;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.backend.configuration.AppConstraints;
 import com.project.backend.exceptions.ResourceNotFoundException;
+import com.project.backend.model.Role;
 import com.project.backend.model.User;
 import com.project.backend.payloads.UserDto;
+import com.project.backend.repository.RoleRepository;
 import com.project.backend.repository.UserRepository;
 import com.project.backend.services.UserService;
 
@@ -21,7 +27,13 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private ModelMapper modelMapper;
-
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		
@@ -87,6 +99,24 @@ public class UserServiceImpl implements UserService{
 //		userDto.setUsername(user.getUsername());
 		return userDto;
 		
+	}
+
+	@Override
+	public UserDto registerNewUser(UserDto userDto) {
+		
+		User user = this.modelMapper.map(userDto, User.class);
+		
+		//Encoding the password
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		
+		//Assigning ROLES to new User
+		Role role = this.roleRepository.findById(AppConstraints.NORMAL_USER).get();
+		
+		user.getRoles().add(role);
+		
+		User newUser = this.userRepository.save(user);
+		
+		return this.modelMapper.map(newUser, UserDto.class);
 	}
 	
 }

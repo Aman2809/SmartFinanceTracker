@@ -6,7 +6,8 @@ import com.project.backend.payloads.UserDto;
 
 public interface UserService {
 	
-
+	UserDto registerNewUser(UserDto userDto);
+	
 	UserDto createUser(UserDto user);
 	UserDto updateUser(UserDto user, Long userId);
 	
