@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,6 @@ public class UserController {
 	
 	@PostMapping("/")
 	public ResponseEntity<UserDto> createUser( @Valid @RequestBody UserDto userDto){
-		System.out.println("GET /api/users/ endpoint accessed");
 		
 		UserDto createUserDto=this.userService.createUser(userDto);
 		return new ResponseEntity<>(createUserDto,HttpStatus.CREATED);
@@ -49,6 +49,8 @@ public class UserController {
 	}
 	
 	//Delete User -->Delete
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId")Long uId){
 		this.userService.deleteUser(uId);
@@ -57,12 +59,14 @@ public class UserController {
 	
 	
 	//Get - user get
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public ResponseEntity<List<UserDto>> getAllUsers(){
 		return ResponseEntity.ok(this.userService.getAllUsers());
 	}
 	
 	//Get - user get
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/{userId}")
 		public ResponseEntity<UserDto> getSingleUser(@PathVariable Long userId){
 			return ResponseEntity.ok(this.userService.getUserById(userId));

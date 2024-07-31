@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +65,7 @@ public class IncomeController {
 		
 		
 		 // Get Income by user Id
-		
+		@PreAuthorize("hasRole('ADMIN')")
 		 @GetMapping("/user/{userId}/incomes")
 		    public ResponseEntity<IncomeResponse> getIncomesByUser(@PathVariable Long userId,
 		    		 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
@@ -95,7 +96,7 @@ public class IncomeController {
 		    
 		    
 		  //GET -- all Incomes
-		    
+		    @PreAuthorize("hasRole('ADMIN')")
 			 @GetMapping("/incomes")
 			 public ResponseEntity<IncomeResponse> getAllIncomes(
 					 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,

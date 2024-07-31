@@ -67,13 +67,7 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	 @Override
 	    public GoalsResponse getFinancialGoalsByUserId(Long userId, Integer pageNumber, Integer pageSize,String sortBy,String sortDir) {
 		 
-		 Sort sort=null;
-			if(sortDir.equalsIgnoreCase("asc")) {
-				sort=Sort.by(sortBy).ascending();
-			}
-			else {
-				sort=Sort.by(sortBy).descending();
-			}
+		 Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 		 
 		 Pageable p= PageRequest.of(pageNumber, pageSize, sort);
 	        Page<FinancialGoals> pageGoals = this.financialGoalsRepository.findByUser_UserId(userId,p);
@@ -83,8 +77,8 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	        List<FinancialGoalsDto> financialGoalsDto =  goals.stream().map(goal -> modelMapper.map(goal, FinancialGoalsDto.class))
 	                .collect(Collectors.toList());
 	        
-	        GoalsResponse goalsResponse=new GoalsResponse();
-	        goalsResponse.setGoalsContent(financialGoalsDto);
+	       GoalsResponse goalsResponse=new GoalsResponse();
+	       goalsResponse.setGoalsContent(financialGoalsDto);
 	 	   goalsResponse.setPageNumber(pageGoals.getNumber());
 	 	   goalsResponse.setPageSize(pageGoals.getSize());
 	 	   goalsResponse.setTotalElement(pageGoals.getTotalElements());
@@ -107,13 +101,7 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 	@Override
 	public GoalsResponse getAllGoals(Integer pageNumber , Integer pageSize,String sortBy,String sortDir) {
 		
-		Sort sort=null;
-		if(sortDir.equalsIgnoreCase("asc")) {
-			sort=Sort.by(sortBy).ascending();
-		}
-		else {
-			sort=Sort.by(sortBy).descending();
-		}
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 		
 		Pageable p = PageRequest.of(pageNumber, pageSize, sort);
 		
@@ -123,9 +111,13 @@ public class FinancialGoalsServiceImpl implements FinancialGoalsService{
 		
 	   List<FinancialGoalsDto> financialGoalsDto = allGoals.stream().map((goal)-> this.modelMapper.map(goal,FinancialGoalsDto.class)).collect(Collectors.toList());
 	   
+	   
+	   System.out.println("Mapped FinancialGoalsDto: " + financialGoalsDto);
+	   
 	   GoalsResponse goalsResponse = new GoalsResponse();
 	   
 	   goalsResponse.setGoalsContent(financialGoalsDto);
+	   System.out.println("Retrieved FinancialGoals: " + allGoals);
 	   goalsResponse.setPageNumber(pageGoals.getNumber());
 	   goalsResponse.setPageSize(pageGoals.getSize());
 	   goalsResponse.setTotalElement(pageGoals.getTotalElements());

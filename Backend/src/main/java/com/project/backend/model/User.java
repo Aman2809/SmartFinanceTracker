@@ -54,6 +54,12 @@ public class User  implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FinancialGoals> financialGoals;
     
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Expense> expenses;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Income> incomes;
+    
     
     @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JoinTable(name="user_role",
