@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.project.backend.security.CustomUserDetailsService;
 import com.project.backend.security.JwtAuthenticationFilter;
@@ -22,6 +23,7 @@ import com.project.backend.security.JwtAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableWebMvc
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
@@ -39,6 +41,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> authz
                 .requestMatchers("/api/**").authenticated()
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/v3/api-docs").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -64,7 +64,6 @@ public class ExpenseController {
 	
 	 // Get expense by user Id
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	 @GetMapping("/user/{userId}/expenses")
 	    public ResponseEntity<ExpenseResponse> getExpenseByUser(@PathVariable Long userId,
 	    		 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
@@ -95,7 +94,7 @@ public class ExpenseController {
 	    
 	    //GET -- all Expense
 	    
-	    @PreAuthorize("hasRole('ADMIN')")
+	    @PreAuthorize("hasAuthority('ADMIN_USER')")
 		 @GetMapping("/expenses")
 		 public ResponseEntity<ExpenseResponse> getAllExpense(
 				 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,

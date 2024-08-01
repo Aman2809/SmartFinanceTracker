@@ -65,7 +65,6 @@ public class IncomeController {
 		
 		
 		 // Get Income by user Id
-		@PreAuthorize("hasRole('ADMIN')")
 		 @GetMapping("/user/{userId}/incomes")
 		    public ResponseEntity<IncomeResponse> getIncomesByUser(@PathVariable Long userId,
 		    		 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
@@ -96,7 +95,7 @@ public class IncomeController {
 		    
 		    
 		  //GET -- all Incomes
-		    @PreAuthorize("hasRole('ADMIN')")
+		    @PreAuthorize("hasAuthority('ADMIN_USER')")
 			 @GetMapping("/incomes")
 			 public ResponseEntity<IncomeResponse> getAllIncomes(
 					 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,

@@ -77,7 +77,7 @@ public class FinancialGoalsController {
 		    }
 		 
 		 //GET -- all Goals
-		 @PreAuthorize("hasRole('ADMIN')")
+		 @PreAuthorize("hasAuthority('ADMIN_USER')")
 		 @GetMapping("/financial-goals")
 		 public ResponseEntity<GoalsResponse> getAllGoals(
 				 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,
