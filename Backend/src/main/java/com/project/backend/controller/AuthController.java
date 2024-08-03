@@ -19,6 +19,8 @@ import com.project.backend.security.CustomUserDetailsService;
 import com.project.backend.security.JwtUtil;
 import com.project.backend.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -59,7 +61,7 @@ public class AuthController {
     //Register new user api
     
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto){
     	
     	UserDto registerNewUser = this.userService.registerNewUser(userDto);
     	

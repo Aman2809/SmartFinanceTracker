@@ -20,6 +20,7 @@ public class UserDto {
 	@Size(min=4 , message= "Username must be of min. 4 characters !! ")
 	private String username;
 	
+	@NotEmpty(message="email can't be Null")
 	@Email(message="Email address is not Valid !! ")
 	private String email;
 	
