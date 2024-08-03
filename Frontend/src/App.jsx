@@ -9,6 +9,8 @@ import Dashboard from './components/dashboard';
 import ExpenseTracker from './components/ExpenseTracker';
 import FinancialGoals from './components/FinancialGoals';
 import InvestmentRecommendations from './components/InvestmentRecommendations';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   
@@ -44,7 +46,10 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer position="top-center" />
+    </>
   );
 };
 

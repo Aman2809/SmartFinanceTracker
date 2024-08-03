@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { FaUserAlt, FaUnlock } from 'react-icons/fa';
+import { FaUnlock } from 'react-icons/fa';
 import RegisterPage from './RegisterPage';
 import { IoIosMail } from "react-icons/io";
 
 const LoginPage = ({ onClose }) => {
+  
   const [isRegister, setIsRegister] = useState(false);
 
   const initialValues = {
