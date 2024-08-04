@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.backend.exceptions.ResourceNotFoundException;
+import com.project.backend.exceptions.UserNotFoundException;
 import com.project.backend.model.User;
 import com.project.backend.repository.UserRepository;
 
@@ -25,10 +26,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		//Loding User From Database by username
+		//Loading User From Database by username
 		
 		User user = this.userRepository.findByEmail(username)
-				.orElseThrow(()->new ResourceNotFoundException("User", "username: "+username, 0));
+				.orElseThrow(()->new UserNotFoundException("User", "email  ", username));
 		
 		
 		return user;
