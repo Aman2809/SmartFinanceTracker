@@ -1,26 +1,14 @@
 package com.project.backend.model;
 
+import com.project.backend.payloads.UserDto;
 
+import lombok.Data;
 
-
-
+@Data
 public class JwtResponse {
-	private final String jwt;
-	private final String username;
+	private  String jwt;
+	private  UserDto user;
 	
 
-	public JwtResponse(String jwt, String username) {
-        this.jwt = jwt;
-        this.username = username;
-    }
 	
-	
-
-    public String getJwt() {
-        return jwt;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
 }

@@ -3,6 +3,7 @@ package com.project.backend.payloads;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.backend.model.Role;
 
 import jakarta.validation.constraints.Email;
@@ -44,6 +45,8 @@ public class UserDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

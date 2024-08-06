@@ -1,5 +1,6 @@
 package com.project.backend.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.model.JwtRequest;
 import com.project.backend.model.JwtResponse;
+import com.project.backend.model.User;
 import com.project.backend.payloads.UserDto;
 import com.project.backend.security.CustomUserDetailsService;
 import com.project.backend.security.JwtUtil;
@@ -25,12 +27,20 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
 	
+
+
 	@Autowired
 	private UserService userService;
 
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+
 
     public AuthController(AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
@@ -39,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -49,12 +59,18 @@ public class AuthController {
             final String jwt = jwtUtil.generateToken(userDetails);
 
             System.out.println("Authenticated user: " + userDetails.getUsername());
-
-            return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername()));
+            
+            JwtResponse response= new JwtResponse();
+            response.setJwt(jwt);
+            response.setUser(this.modelMapper.map((User)userDetails, UserDto.class));
+ 
+            
+            return new ResponseEntity<JwtResponse>(response,HttpStatus.OK);
+//            return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername()));
         } catch (BadCredentialsException e) {
             // Handle the case where the authentication fails
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new JwtResponse("Invalid username or password", null));
+           
+        	throw new Exception("Invalid Username or Password !! ");
         }
     }
     
