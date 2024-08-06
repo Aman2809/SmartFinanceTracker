@@ -1,26 +1,65 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import { Formik,Form,Field } from 'formik';
 import { FaUnlock } from 'react-icons/fa';
 import RegisterPage from './RegisterPage';
 import { IoIosMail } from "react-icons/io";
+import { toast } from 'react-toastify';
+import { loginUser } from '../services/user-service';
+import { doLogin } from '../jwtAuth/auth';
 
 const LoginPage = ({ onClose }) => {
   
   const [isRegister, setIsRegister] = useState(false);
 
-  const initialValues = {
-    email: '',
+  const [data, setData] = useState({
+
+    username: '',
     password: '',
+  })
+
+  const handleChange=(e,field)=>{
+    setData({...data,[field]:e.target.value})
+    console.log(data)
+
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email address').required('Required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
-  });
 
-  const onSubmit = (values) => {
-    console.log('Form data', values);
+
+
+
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    console.log('Form data', data);
+
+    if(data.username.trim()=="" || data.password.trim==""){
+      toast.error("Username or Password is required")
+      return;
+    }
+
+    //Submitting the data to server to generate token
+    loginUser(data).then((jwtTokenData)=>{
+
+      console.log("User Token : ")
+      console.log(jwtTokenData)
+
+
+      //Save the Data to the Local Storage.....
+
+      doLogin(jwtTokenData,()=>{
+        console.log("Login Details is saved to Local Storage ")
+
+        //Redirect to user Dashboard Page
+        
+      })
+
+
+      toast.success("Login Success !! ")
+    }).catch(error=>{
+      console.log(error)
+      toast.error("Something went wrong on server")
+    })
+
   };
 
   const toggleForm = () => {
@@ -40,17 +79,16 @@ const LoginPage = ({ onClose }) => {
             
           </button>
           <h1 className="text-4xl text-white text-center font-bold mb-6">Login</h1>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            <Form>
+          <Formik >
+            <Form onSubmit={onSubmit} >
               <div className="relative my-4">
                 <Field
                   type="email"
                   name="email"
                   placeholder=" "
+                  value={data.username}
+                  onChange={(e)=>handleChange(e,"username")}
+                  
                   className="block w-72 px-0 py-2.3 text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer my-8"
                 />
                 <label className="absolute text-base text-white duration-300 transform -translate-y-6 scale-75 -top-2 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
@@ -61,6 +99,8 @@ const LoginPage = ({ onClose }) => {
                   type="password"
                   name="password"
                   placeholder=" "
+                  value={data.password}
+                  onChange={(e)=>handleChange(e,"password")}
                   className="block w-72 px-0 py-2.3 text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer my-8"
                 />
                 <label className="absolute text-base text-white duration-300 transform -translate-y-6 scale-75 -top-2 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
@@ -78,7 +118,7 @@ const LoginPage = ({ onClose }) => {
                 <span className='m-4 text-white'>New Here? <button type="button" className="text-blue-500" onClick={toggleForm}>Create an Account</button></span>
               </div>
             </Form>
-          </Formik>
+            </Formik>
         </div>
       )}
     </div>

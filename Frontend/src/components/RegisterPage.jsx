@@ -32,11 +32,7 @@ const RegisterPage = ({ toggleForm, onClose }) => {
   const onSubmit=(event)=>{
     event.preventDefault()
 
-    // if(error.isError){
-    //   toast.error("Form data is invalid !! ")
-    //   setError({...error,isError:false})
-    //   return;
-    // }
+
 
     console.log(data)
     //Data Validation
