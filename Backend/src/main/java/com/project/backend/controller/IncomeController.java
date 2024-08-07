@@ -27,7 +27,7 @@ import com.project.backend.services.IncomeService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/v1/")
 public class IncomeController {
 	
 	
@@ -95,7 +95,7 @@ public class IncomeController {
 		    
 		    
 		  //GET -- all Incomes
-		    @PreAuthorize("hasAuthority('ADMIN_USER')")
+
 			 @GetMapping("/incomes")
 			 public ResponseEntity<IncomeResponse> getAllIncomes(
 					 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,

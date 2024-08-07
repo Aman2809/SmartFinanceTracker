@@ -27,7 +27,7 @@ import com.project.backend.services.ExpenseService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/v1/")
 public class ExpenseController {
 	
 	@Autowired
@@ -94,7 +94,7 @@ public class ExpenseController {
 	    
 	    //GET -- all Expense
 	    
-	    @PreAuthorize("hasAuthority('ADMIN_USER')")
+
 		 @GetMapping("/expenses")
 		 public ResponseEntity<ExpenseResponse> getAllExpense(
 				 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,

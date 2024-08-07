@@ -22,7 +22,7 @@ import com.project.backend.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 	
 	@Autowired
@@ -59,14 +59,12 @@ public class UserController {
 	
 	
 	//Get - user get
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/")
 	public ResponseEntity<List<UserDto>> getAllUsers(){
 		return ResponseEntity.ok(this.userService.getAllUsers());
 	}
 	
 	//Get - user get
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/{userId}")
 		public ResponseEntity<UserDto> getSingleUser(@PathVariable Long userId){
 			return ResponseEntity.ok(this.userService.getUserById(userId));

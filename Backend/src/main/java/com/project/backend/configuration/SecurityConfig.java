@@ -2,6 +2,7 @@ package com.project.backend.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -39,10 +40,15 @@ public class SecurityConfig {
         http
             .csrf(csrf->csrf.disable())
             .authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/api/**").authenticated()
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/v3/api-docs").permitAll()
-                .anyRequest().authenticated()
+            		 // Allow all GET requests
+                    .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                    // Allow specific endpoints like login and register
+                    .requestMatchers("/api/v1/auth/login").permitAll()
+                    .requestMatchers("/api/v1/auth/register").permitAll()
+                    // Allow API documentation
+                    .requestMatchers("/v3/api-docs").permitAll()
+                    // Authenticate all other requests
+                    .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())

@@ -27,7 +27,7 @@ import com.project.backend.services.FinancialGoalsService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/v1/")
 public class FinancialGoalsController {
 	
 	@Autowired
@@ -77,7 +77,7 @@ public class FinancialGoalsController {
 		    }
 		 
 		 //GET -- all Goals
-		 @PreAuthorize("hasAuthority('ADMIN_USER')")
+
 		 @GetMapping("/financial-goals")
 		 public ResponseEntity<GoalsResponse> getAllGoals(
 				 @RequestParam(value="pageNumber",defaultValue=AppConstraints.PAGE_NUMBER,required=false)Integer pageNumber,

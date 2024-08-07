@@ -24,7 +24,7 @@ import com.project.backend.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/")
 public class AuthController {
 	
 
@@ -48,7 +48,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
@@ -76,7 +76,7 @@ public class AuthController {
     
     //Register new user api
     
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto){
     	
     	UserDto registerNewUser = this.userService.registerNewUser(userDto);
