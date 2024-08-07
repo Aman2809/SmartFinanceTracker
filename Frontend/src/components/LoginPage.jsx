@@ -6,10 +6,12 @@ import { IoIosMail } from "react-icons/io";
 import { toast } from 'react-toastify';
 import { loginUser } from '../services/user-service';
 import { doLogin } from '../jwtAuth/auth';
+// import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ onClose }) => {
   
   const [isRegister, setIsRegister] = useState(false);
+  // const navigate = useNavigate(); // Use the useNavigate hook
 
   const [data, setData] = useState({
 
@@ -50,11 +52,14 @@ const LoginPage = ({ onClose }) => {
         console.log("Login Details is saved to Local Storage ")
 
         //Redirect to user Dashboard Page
+        toast.success("Login Success!!");
+        
+        // navigate('/user/dashboard'); // Redirect to the dashboard
         
       })
 
 
-      toast.success("Login Success !! ")
+      // toast.success("Login Success !! ")
     }).catch(error=>{
       console.log(error)
       toast.error("Something went wrong on server")

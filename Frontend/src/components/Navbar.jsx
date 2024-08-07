@@ -1,7 +1,35 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { doLogout, getCurrentUser, isLoggedIn } from '../jwtAuth/auth';
 
 function Navbar({ openLoginModal }) {
+
+let navigate=useNavigate()
+const [login, setLogin] = useState(false)
+const [user,setUser]=useState(undefined)
+
+
+
+
+
+useEffect(() => {
+
+setLogin(isLoggedIn())
+setUser(getCurrentUser())
+
+}, [login])
+
+const logout=()=>{
+  doLogout(()=>{
+    setLogin(false)
+    navigate("/")
+    
+  })
+}
+
+
+
+
   return (
     <nav className="flex justify-between items-center px-20 py-4 bg-transparent absolute top-0 left-0 w-full z-10">
       <div className="flex items-center space-x-4">
@@ -15,8 +43,28 @@ function Navbar({ openLoginModal }) {
         <NavLink to="/faq" className="hover:text-lg font-bold transition-all duration-300"><li>FAQ</li></NavLink>
       </ul>
       <div className="flex space-x-2">
-        <button onClick={openLoginModal} className="px-4 py-2 text-black font-bold rounded hover:text-black">Log in</button>
-        <button className="px-4 py-2 text-black font-bold rounded bg-pink-300 hover:bg-pink-400">Get Started</button>
+
+        {
+          login &&(
+            <>
+            
+            <button onClick={logout} className="px-4 py-2 text-black font-bold rounded hover:text-black">Logout</button>
+            <button className="px-4 py-2 text-black font-bold rounded bg-pink-300 hover:bg-pink-400">Get Started</button>
+            
+            </>
+          )
+        }
+        
+        {
+          !login &&(
+
+            <>
+            <button onClick={openLoginModal} className="px-4 py-2 text-black font-bold rounded hover:text-black">Log in</button>
+            <button className="px-4 py-2 text-black font-bold rounded bg-pink-300 hover:bg-pink-400">Get Started</button>
+            </>
+          )
+        }
+
       </div>
     </nav>
   );
