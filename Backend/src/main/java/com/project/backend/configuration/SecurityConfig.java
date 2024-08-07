@@ -42,6 +42,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> authz
             		 // Allow all GET requests
                     .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                    .requestMatchers(HttpMethod.POST).permitAll()
                     // Allow specific endpoints like login and register
                     .requestMatchers("/api/v1/auth/login").permitAll()
                     .requestMatchers("/api/v1/auth/register").permitAll()
