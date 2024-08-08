@@ -23,7 +23,6 @@ export const signout = <i className="fa-solid fa-right-from-bracket"></i>
 export const takeaway = <i className="fa-solid fa-utensils"></i>
 export const clothing = <i className="fa-solid fa-shirt"></i>
 export const book = <i className="fa-solid fa-book-open"></i>
-export const food = <i className="fa-solid fa-bowl-food"></i>
 export const medical = <i className="fa-solid fa-briefcase-medical"></i>
 export const tv = <i className="fa-solid fa-tv"></i>
 export const circle = <i className="fa-solid fa-circle-dot"></i>
@@ -34,3 +33,15 @@ export const investment = <i className="fa-solid fa-credit-card"></i>
 export const interest = <i class="fa-solid fa-building-columns"></i>
 export const other = <i class="fa-solid fa-money-bills"></i>
 export const rupee = <i class="fa-solid fa-indian-rupee-sign"></i>
+export const food= <i class="fa-solid fa-bowl-food"></i>
+export const transportation=<i class="fa-solid fa-truck"></i>
+export const utility =<i class="fa-solid fa-file-invoice-dollar"></i>
+export const healthcare = <i class="fa-solid fa-notes-medical"></i>
+export const entertainment = <i class="fa-solid fa-tv-retro"></i>
+export const education =<i class="fa-solid fa-school"></i>
+export const shopping = <i class="fa-solid fa-cart-shopping"></i>
+export const personalCare =<i class="fa-solid fa-hand-holding-medical"></i>
+export const travel = <i class="fa-solid fa-truck-plane"></i>
+export const gifts =<i class="fa-solid fa-gifts"></i>
+export const house = <i class="fa-solid fa-house"></i>
+export const edit = <i class="fa-solid fa-pen-to-square"></i>

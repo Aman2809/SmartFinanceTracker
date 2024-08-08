@@ -6,11 +6,13 @@ import {
     getIncomeCategories,
     getIncomesByUser,
     getTotalIncomeByUser,
-    deleteIncome
+    updateIncome,
+    deleteIncome,
+    getIncomeById
 } from '../../services/Income-service';
 import { getCurrentUser } from '../../jwtAuth/auth';
 import { toast } from 'react-toastify';
-import { salary, rental, business, investment, interest, trash, other, dollar, comment, calender,plus,rupee } from '../../utils/Icon';
+import { salary,edit, rental, business, investment, interest, trash, other, dollar, comment, calender,plus,rupee } from '../../utils/Icon';
 
 const Income = () => {
     const style = {
@@ -30,6 +32,7 @@ const Income = () => {
     const [active, setActive] = useState(1);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
+    const [editingIncome, setEditingIncome] = useState(null);
 
     useEffect(() => {
         getIncomeCategories()
@@ -52,14 +55,13 @@ const Income = () => {
     useEffect(() => {
         if (user) {
             fetchIncomes(user.id, currentPage);
-            fetchTotalIncome(user.id); // Fetch the total income
+            fetchTotalIncome(user.id);
         }
     }, [user, currentPage]);
 
     const fetchIncomes = (userId, page) => {
         getIncomesByUser(userId, page, 3)
             .then((data) => {
-                console.log(`Fetched page ${page}:`, data.content);
                 setIncomeList(data.content);
                 setTotalPages(data.totalPages);
             })
@@ -71,7 +73,7 @@ const Income = () => {
     const fetchTotalIncome = (userId) => {
         getTotalIncomeByUser(userId)
             .then((total) => {
-                setTotalIncome(total); // Set the total income fetched from the backend
+                setTotalIncome(total);
             })
             .catch((error) => {
                 console.log(error);
@@ -82,37 +84,71 @@ const Income = () => {
         setIncomes({ ...incomes, [field]: event.target.value });
     };
 
-    const createIncome = (event) => {
+    const createOrUpdateIncome = (event) => {
         event.preventDefault();
         if (!user) {
             alert("User not loaded");
             return;
         }
         incomes['userId'] = user.id;
-        createIncomeData(incomes)
-            .then(data => {
-                toast.success("Income Created !! ");
-                setIncomes({
-                    source: '',
-                    amount: '',
-                    date: '',
-                    category: ''
+        if (editingIncome) {
+            updateIncome(editingIncome.incomeId, incomes)
+                .then(data => {
+                    toast.success("Income Updated !!");
+                    setEditingIncome(null);
+                    setIncomes({
+                        source: '',
+                        amount: '',
+                        date: '',
+                        category: ''
+                    });
+                    fetchIncomes(user.id, currentPage);
+                    fetchTotalIncome(user.id);
+                })
+                .catch(error => {
+                    toast.error("Error Occurred !!");
+                    console.error("Update Income Error:", error.response || error.message);
                 });
-                fetchIncomes(user.id, currentPage);
-                fetchTotalIncome(user.id); // Refresh the total income after creating a new entry
-            })
-            .catch((error) => {
-                toast.error("Error Occurred !! ");
-                console.error("Create Income Error:", error.response || error.message);
-            });
+        } else {
+            createIncomeData(incomes)
+                .then(data => {
+                    toast.success("Income Created !!");
+                    setIncomes({
+                        source: '',
+                        amount: '',
+                        date: '',
+                        category: ''
+                    });
+                    fetchIncomes(user.id, currentPage);
+                    fetchTotalIncome(user.id);
+                })
+                .catch(error => {
+                    toast.error("Error Occurred !!");
+                    console.error("Create Income Error:", error.response || error.message);
+                });
+        }
     };
+
+    const startEdit = (income) => {
+        // Convert the date to yyyy-mm-dd format
+        const formattedDate = new Date(income.date).toISOString().split('T')[0];
+        
+        setEditingIncome(income);
+        setIncomes({
+            source: income.source,
+            amount: income.amount,
+            date: formattedDate,
+            category: income.category
+        });
+    };
+    
 
     const deleteIncomeHandler = (incomeId) => {
         deleteIncome(incomeId)
             .then(() => {
                 toast.success("Income Deleted !!");
                 fetchIncomes(user.id, currentPage);
-                fetchTotalIncome(user.id); // Refresh the total income after deleting an entry
+                fetchTotalIncome(user.id);
             })
             .catch((error) => {
                 toast.error("Error Occurred While Deleting !! ");
@@ -154,7 +190,7 @@ const Income = () => {
                     </h2>
                     <div className="flex flex-col md:flex-row gap-8">
                         <div className="w-full md:w-1/4">
-                            <form onSubmit={createIncome} className="space-y-4">
+                            <form onSubmit={createOrUpdateIncome} className="space-y-4">
                                 <div>
                                     <label className="block font-medium mb-1">
                                         <input
@@ -210,7 +246,7 @@ const Income = () => {
                                     </label>
                                 </div>
                                 <button type="submit" className="px-4 py-2 bg-pink-500 text-white text-sm rounded-3xl hover:bg-pink-600">
-                                    {plus}     Add Income
+                                    {plus} {editingIncome ? 'Update Income' : 'Add Income'}
                                 </button>
                             </form>
                         </div>
@@ -233,6 +269,11 @@ const Income = () => {
                                                 </div>
                                             </div>
                                             <div className="flex items-center">
+                                                <button
+                                                    onClick={() => startEdit(income)}
+                                                    className="bg-yellow-500 text-white rounded-full px-4 py-2 mr-2">
+                                                    {edit}
+                                                </button>
                                                 <button
                                                     onClick={() => deleteIncomeHandler(income.incomeId)}
                                                     className="bg-black text-white rounded-full px-4 py-2">
@@ -269,8 +310,6 @@ const Income = () => {
                         Next
                     </button>
                 </div>
-
-
             </div>
         </div>
     );

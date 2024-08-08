@@ -19,22 +19,24 @@ export const createIncomeData = async (incomeData) => {
     }
 };
 
-// Update Income
+// src/services/IncomeService.js
 export const updateIncome = async (incomeId, incomeDto) => {
     try {
-        const response = await myAxios.put(`/incomes/${incomeId}`, incomeDto);
+        const response = await privateAxios.put(`/incomes/${incomeId}`, incomeDto);
         return response.data;
     } catch (error) {
+        console.error("Error in updateIncome:", error.response || error.message);
         throw error;
     }
 };
 
-// Get Income By Id
+// Get Income By Id (for pre-filling the form)
 export const getIncomeById = async (incomeId) => {
     try {
-        const response = await myAxios.get(`/incomes/${incomeId}`);
+        const response = await privateAxios.get(`/incomes/${incomeId}`);
         return response.data;
     } catch (error) {
+        console.error("Error in getIncomeById:", error.response || error.message);
         throw error;
     }
 };
