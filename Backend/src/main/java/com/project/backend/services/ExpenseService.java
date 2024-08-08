@@ -23,6 +23,9 @@ public interface ExpenseService {
 	ExpenseResponse getAllExpense(Integer pageNumber , Integer pageSize, String sortBy,String sortDir);
 	
 	void deleteExpense(Long expenseId);
+	
+	
+	 Double getTotalExpenseByUser(Long userId);
 	 
 	 
 	

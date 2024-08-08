@@ -120,6 +120,14 @@ public class ExpenseController {
 		        return new ResponseEntity<>(expenses, HttpStatus.OK);
 		    }
 		 
+		 //Get Total Expense for a particular user
+		 
+		 @GetMapping("/user/{userId}/expenses/total")
+		    public ResponseEntity<Double> getTotalExpenseByUser(@PathVariable Long userId) {
+		        Double totalExpense = expenseService.getTotalExpenseByUser(userId);
+		        return new ResponseEntity<>(totalExpense, HttpStatus.OK);
+		    }
+		 
 		 
 			//Delete Expense -->Delete
 

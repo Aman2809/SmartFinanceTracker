@@ -123,6 +123,12 @@ public class ExpenseServiceImpl implements ExpenseService{
 
 	    return expenseResponse;
 	}
+	
+	 @Override
+	    public Double getTotalExpenseByUser(Long userId) {
+	        Double totalIncome = expenseRepo.getTotalExpenseByUser_UserId(userId);
+	        return totalIncome != null ? totalIncome : 0.0;
+	    }
 
 	@Override
 	public void deleteExpense(Long expenseId) {
