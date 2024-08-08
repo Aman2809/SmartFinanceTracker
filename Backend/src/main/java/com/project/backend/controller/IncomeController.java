@@ -124,6 +124,15 @@ public class IncomeController {
 			    }
 			 
 			 
+			 //Get Total Income for a particular user
+			 
+			 @GetMapping("/user/{userId}/incomes/total")
+			    public ResponseEntity<Double> getTotalIncomeByUser(@PathVariable Long userId) {
+			        Double totalIncome = incomeService.getTotalIncomeByUser(userId);
+			        return new ResponseEntity<>(totalIncome, HttpStatus.OK);
+			    }
+			 
+			 
 			//Delete Incomes -->Delete
 
 				@DeleteMapping("/incomes/{incomeId}")

@@ -18,6 +18,7 @@ public interface IncomeService {
 	    IncomeResponse getIncomesByUser(Long userId, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 	    List<IncomeDto> getIncomesByUserAndCategory(Long userId, IncomeCategory category);
 	    List<IncomeDto> getIncomesByUserAndDateBetween(Long userId, LocalDate startDate, LocalDate endDate);
+	    Double getTotalIncomeByUser(Long userId);
 	}
 	
 

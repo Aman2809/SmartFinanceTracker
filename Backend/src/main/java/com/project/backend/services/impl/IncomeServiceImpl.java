@@ -124,6 +124,13 @@ public class IncomeServiceImpl implements IncomeService {
 	                .map(income -> modelMapper.map(income, IncomeDto.class))
 	                .collect(Collectors.toList());
 	    }
+	    
+	    
+	    @Override
+	    public Double getTotalIncomeByUser(Long userId) {
+	        Double totalIncome = incomeRepository.getTotalIncomeByUser_UserId(userId);
+	        return totalIncome != null ? totalIncome : 0.0;
+	    }
 
 		
 		
