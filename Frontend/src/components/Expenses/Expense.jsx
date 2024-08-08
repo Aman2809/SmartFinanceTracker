@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ExpenseTracker = () => {
+const Expense = () => {
   const [expenses, setExpenses] = useState([]);
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
@@ -54,4 +54,4 @@ const ExpenseTracker = () => {
   );
 };
 
-export default ExpenseTracker;
+export default Expense;

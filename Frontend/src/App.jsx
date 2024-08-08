@@ -6,7 +6,7 @@ import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Dashboard from './components/dashboard';
-import ExpenseTracker from './components/Expenses/ExpenseTracker';
+import Expense from './components/Expenses/Expense';
 import FinancialGoals from './components/FinancialGoals';
 import InvestmentRecommendations from './components/InvestmentRecommendations';
 import { ToastContainer } from 'react-toastify';
@@ -49,8 +49,8 @@ const App = () => {
           element: <Income/>
         },
         {
-          path: "expense-tracker",
-          element: <ExpenseTracker />,
+          path: "expense",
+          element: <Expense/>
         },
         {
           path: "financial-goals",

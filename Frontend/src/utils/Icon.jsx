@@ -27,3 +27,10 @@ export const food = <i className="fa-solid fa-bowl-food"></i>
 export const medical = <i className="fa-solid fa-briefcase-medical"></i>
 export const tv = <i className="fa-solid fa-tv"></i>
 export const circle = <i className="fa-solid fa-circle-dot"></i>
+export const business = <i class="fa-solid fa-business-time"></i>
+export const salary = <i class="fa-solid fa-money-bill"></i>
+export const rental = <i class="fa-solid fa-house"></i>
+export const investment = <i className="fa-solid fa-credit-card"></i>
+export const interest = <i class="fa-solid fa-building-columns"></i>
+export const other = <i class="fa-solid fa-money-bills"></i>
+export const rupee = <i class="fa-solid fa-indian-rupee-sign"></i>

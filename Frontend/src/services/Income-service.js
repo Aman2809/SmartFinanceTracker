@@ -2,28 +2,6 @@
 import { myAxios ,privateAxios} from "./helper";
 
 
-// Create Income
-// export const createIncome = async (userId, incomeDto) => {
-//     try {
-//         const response = await myAxios.post(`/user/${userId}/incomes`, incomeDto);
-//         return response.data;
-//     } catch (error) {
-//         throw error;
-//     }
-// };
-
-
-
-// export const createIncomeData = async (incomeData) => {
-//     try {
-//         console.log(incomeData)
-//         const response = await privateAxios.post(`/user/${incomeData.userId}/incomes`);
-//         return response.data;
-//     } catch (error) {
-//         throw error;
-//     }
-// };
-
 
 // Create Income
 export const createIncomeData = async (incomeData) => {
@@ -62,7 +40,7 @@ export const getIncomeById = async (incomeId) => {
 };
 
 // Get Incomes By User
-export const getIncomesByUser = async (userId, pageNumber = 0, pageSize = 10, sortBy = 'id', sortDir = 'asc') => {
+export const getIncomesByUser = async (userId, pageNumber = 0, pageSize = 3, sortBy = 'incomeId', sortDir = 'asc') => {
     try {
         const response = await myAxios.get(`/user/${userId}/incomes`, {
             params: { pageNumber, pageSize, sortBy, sortDir }
@@ -83,10 +61,24 @@ export const getIncomesByUserAndCategory = async (userId, category) => {
     }
 };
 
-// Get All Incomes
-export const getAllIncomes = async () => {
+// Get Total Income By User
+export const getTotalIncomeByUser = async (userId) => {
     try {
-        const response = await myAxios.get(`/incomes`);
+        const response = await myAxios.get(`/user/${userId}/incomes/total`);
+        return response.data;
+    } catch (error) {
+        console.error("Error in getTotalIncomeByUser:", error.response || error.message);
+        throw error;
+    }
+};
+
+
+// Get All Incomes
+export const getAllIncomes = async (pageNumber = 0, pageSize = 3, sortBy = 'incomeId', sortDir = 'asc') => {
+    try {
+        const response = await myAxios.get(`/incomes`,{
+            params: { pageNumber, pageSize, sortBy, sortDir }
+        });
         return response.data;
     } catch (error) {
         throw error;
@@ -106,7 +98,7 @@ export const getIncomesByUserAndDateBetween = async (userId, startDate, endDate)
 // Delete Income
 export const deleteIncome = async (incomeId) => {
     try {
-        const response = await myAxios.delete(`/incomes/${incomeId}`);
+        const response = await privateAxios.delete(`/incomes/${incomeId}`);
         return response.data;
     } catch (error) {
         throw error;
