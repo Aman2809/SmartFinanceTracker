@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import LoginPage from './LoginPage';
 import Modal from './Modal';
+import bg from '../img/bg.png';
 
 function Home() {
+
+  const style = {
+    backgroundImage: `url(${bg})`,
+};
+
+
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const openLoginModal = () => setIsLoginModalOpen(true);
@@ -11,7 +18,7 @@ function Home() {
 
   return (
     <>
-      <div className="relative bg-gradient-to-r from-[#f7f1f1] to-[#faced5] h-[90vh] flex flex-col items-center text-white">
+      <div  style={style} className="relative  h-[90vh] flex flex-col items-center text-white">
         <Navbar openLoginModal={openLoginModal} />
 
         <div className='flex flex-col lg:flex-row mt-32 px-8 justify-between space-x-10'>

@@ -1,57 +1,75 @@
-// Navigation.js
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import avatar from '../../img/avatar.png'; // Replace with your avatar image path
-import { signout } from '../../utils/Icon'
+import { signout } from '../../utils/Icon';
 import { menuItems } from '../../utils/menuItems'; // Replace with your menu items array
+import { doLogout, getCurrentUser, isLoggedIn } from '../../jwtAuth/auth';
 
 function Navigation({ active, setActive }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [login, setLogin] = useState(false);
+  const [user,setUser]=useState(null);
 
-    const handleSignOut = () => {
-        // Add your sign-out logic here
-        navigate('/'); // Redirect to home or login page
-    };
+  useEffect(() => {
+    setLogin(isLoggedIn());
+    setUser(getCurrentUser);
+  }, [login]);
 
-    return (
-        <NavStyled>
-            <div className="user-con">
-                <img src={avatar} alt="User Avatar" />
-                <div className="text">
-                    <h2>Aman</h2>
-                    <p>Your Money</p>
-                </div>
-            </div>
-            <ul className="menu-items">
-                {menuItems.map((item) => (
-                    <li
-                        key={item.id}
-                        onClick={() => setActive(item.id)}
-                        className={active === item.id ? 'active' : ''}
-                    >
-                        {item.icon}
-                        <span>{item.title}</span>
-                    </li>
-                ))}
-            </ul>
-            <div className="bottom-nav">
-                <li onClick={handleSignOut}>
-                {signout} Sign Out
-                </li>
-            </div>
-        </NavStyled>
-    );
+  const handleSignOut = () => {
+    doLogout(() => {
+      setLogin(false);
+      navigate("/");
+    });
+  };
+
+  const handleNavigation = (link) => {
+    navigate(link);
+  };
+
+  const currentPath = location.pathname;
+  const activeItem = menuItems.find(item => item.link === currentPath)?.id;
+
+  return (
+    <NavStyled>
+      <div className="user-con">
+        <img src={avatar} alt="User Avatar" />
+        <div className="text">
+        {/* {user ? <p>{user.email}</p> : <p>Loading...</p>} */}
+        <h2>Aman</h2>
+          <p>Your Money</p>
+        </div>
+      </div>
+      <ul className="menu-items">
+        {menuItems.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => handleNavigation(item.link)}
+            className={activeItem === item.id ? 'active' : ''}
+          >
+            {item.icon}
+            <span>{item.title}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="bottom-nav">
+        <li onClick={handleSignOut} className="menu-item">
+          {signout} Sign Out
+        </li>
+      </div>
+    </NavStyled>
+  );
 }
-
-
 
 const NavStyled = styled.nav`
   padding: 2rem 1.5rem;
   width: 300px;
   height: 100vh; /* Full height of the window */
   background: rgba(252, 246, 249, 0.78);
-  border: 20px solid #FFFFFF;
+  border: 20px solid transparent; /* Make the border transparent */
+  background-clip: padding-box; /* Ensure background doesn't cover the border area */
   backdrop-filter: blur(4.5px);
   border-radius: 32px;
   display: flex;
@@ -133,8 +151,25 @@ const NavStyled = styled.nav`
       }
     }
   }
+
+  .menu-item {
+    display: grid;
+    grid-template-columns: 40px auto;
+    align-items: center;
+    margin: .6rem 0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .4s ease-in-out;
+    color: rgba(34, 34, 96, .6);
+    padding-left: 1rem;
+    position: relative;
+    i {
+      color: rgba(34, 34, 96, 0.6);
+      font-size: 1.4rem;
+      transition: all .4s ease-in-out;
+    }
+  }
 `;
 
 
 export default Navigation;
-

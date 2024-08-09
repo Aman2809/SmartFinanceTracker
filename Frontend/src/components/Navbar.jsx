@@ -38,7 +38,7 @@ const logout=()=>{
       </div>
       <ul className="flex space-x-8 text-black">
         <NavLink to="/" className="hover:text-lg font-bold transition-all duration-300"><li>Home</li></NavLink>
-        <NavLink to="/features" className="hover:text-lg font-bold transition-all duration-300"><li>Dashboard</li></NavLink>
+        <NavLink to="/user/dashboard" className="hover:text-lg font-bold transition-all duration-300"><li>Dashboard</li></NavLink>
         <NavLink to="/about" className="hover:text-lg font-bold transition-all duration-300"><li>About</li></NavLink>
         <NavLink to="/faq" className="hover:text-lg font-bold transition-all duration-300"><li>FAQ</li></NavLink>
       </ul>

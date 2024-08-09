@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/Transaction/TransactionPage';
 import Expense from './components/Expenses/Expense';
 import FinancialGoals from './components/FinancialGoals';
 import InvestmentRecommendations from './components/InvestmentRecommendations';
