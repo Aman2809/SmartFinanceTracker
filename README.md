@@ -89,7 +89,7 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/SmartFinancialAdvisor.git
+git clone https://github.com/Aman2809/SmartFinancialAdvisor.git
 ```
 
 ### Backend Setup
@@ -120,7 +120,7 @@ npm start
 
 ### Access the Application
 
-Open your browser and navigate to `http://localhost:3000`.
+Open your browser and navigate to `http://localhost:5173`.
 
 ## Future Enhancements
 
@@ -138,8 +138,8 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For any queries or issues, feel free to contact me at [your-email@example.com].
+For any queries or issues, feel free to contact me at [jhaaman1005@gmail.com].
 
 ---
 
-You can simply copy and paste this markdown content into your `README.md` file on GitHub. The format is structured to be GitHub-friendly, with proper markdown syntax for headers, lists, and code blocks.
+
