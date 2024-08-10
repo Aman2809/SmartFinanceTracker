@@ -1,4 +1,3 @@
-Sure! Here's the README formatted for GitHub:
 
 ---
 
@@ -39,13 +38,13 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
 ## Screenshots
 
 ### Home Page
-![Home Page](Fontend)
+![Home Page](frontend/src/img/HomePage.png)
 
 ### Dashboard
-![Dashboard](assets/dashboard.png)
+![Dashboard](frontend/src/img/Dashboard.png)
 
 ### Adding Income
-![Adding Income](assets/add_income.png)
+![Adding Income](frontend/src/img/Income page.png)
 
 
 ## Technologies Used
