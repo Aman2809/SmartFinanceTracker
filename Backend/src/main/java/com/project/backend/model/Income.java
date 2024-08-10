@@ -32,7 +32,7 @@ public class Income {
     private Long incomeId;
 
 
-    private String source;
+    private String description;
     
     private BigDecimal amount;
     

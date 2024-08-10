@@ -21,7 +21,7 @@ public class IncomeDto {
 	
 	@NotEmpty
 	@Size(min=3,message="source name must be of minimum 3 character !! ")
-    private String source;
+    private String description;
     
 	@NotNull(message = "amount cannot be null !! ")
     private BigDecimal amount;

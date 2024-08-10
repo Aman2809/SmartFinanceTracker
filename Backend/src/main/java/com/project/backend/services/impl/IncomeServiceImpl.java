@@ -50,7 +50,7 @@ public class IncomeServiceImpl implements IncomeService {
 	    public IncomeDto updateIncome(IncomeDto incomeDto, Long incomeId) {
 	        Income income = this.incomeRepository.findById(incomeId)
 	                .orElseThrow(() -> new ResourceNotFoundException("Income", "id", incomeId));
-	        income.setSource(incomeDto.getSource());
+	        income.setDescription(incomeDto.getDescription());
 	        income.setAmount(incomeDto.getAmount());
 	        income.setDate(incomeDto.getDate());
 	        income.setCategory(incomeDto.getCategory());
@@ -58,6 +58,7 @@ public class IncomeServiceImpl implements IncomeService {
 	        return modelMapper.map(updatedIncome, IncomeDto.class);
 	    }
 
+	    
 	    @Override
 	    public void deleteIncome(Long incomeId) {
 	        Income income = this.incomeRepository.findById(incomeId)
