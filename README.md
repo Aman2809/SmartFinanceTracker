@@ -34,6 +34,19 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
   
 - **AI & ML Integration**
   - Implementation of AI and ML functionalities to provide personalized financial advice.
+ 
+
+## Screenshots
+
+### Home Page
+![Home Page](Fontend)
+
+### Dashboard
+![Dashboard](assets/dashboard.png)
+
+### Adding Income
+![Adding Income](assets/add_income.png)
+
 
 ## Technologies Used
 
