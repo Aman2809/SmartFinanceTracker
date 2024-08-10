@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { doLogout, getCurrentUser, isLoggedIn } from '../jwtAuth/auth';
+import Financify from '../img/Financify.png'
+import Financify2 from '../img/Financify2.png'
 
 function Navbar({ openLoginModal }) {
 
@@ -32,8 +34,8 @@ const logout=()=>{
 
   return (
     <nav className="flex justify-between items-center px-20 py-4 bg-transparent absolute top-0 left-0 w-full z-10">
-      <div className="flex items-center space-x-4">
-        <img src="/path/to/logo.png" alt="Origin Logo" className="h-8" />
+      <div className="flex items-center space-x-1">
+        <img src={Financify2} alt="Origin Logo" className="h-16 w-16" />
         <h2 className="text-2xl font-bold text-black">Financfy</h2>
       </div>
       <ul className="flex space-x-8 text-black">

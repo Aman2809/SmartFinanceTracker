@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import avatar from '../../img/avatar.png'; // Replace with your avatar image path
+import avatar from '../../img/avatar.png';
+import avatar2 from '../../img/avatar2.png' // Replace with your avatar image path
 import { signout } from '../../utils/Icon';
 import { menuItems } from '../../utils/menuItems'; // Replace with your menu items array
 import { doLogout, getCurrentUser, isLoggedIn } from '../../jwtAuth/auth';
@@ -15,7 +16,7 @@ function Navigation({ active, setActive }) {
 
   useEffect(() => {
     setLogin(isLoggedIn());
-    setUser(getCurrentUser);
+    setUser(getCurrentUser());
   }, [login]);
 
   const handleSignOut = () => {
@@ -35,7 +36,7 @@ function Navigation({ active, setActive }) {
   return (
     <NavStyled>
       <div className="user-con">
-        <img src={avatar} alt="User Avatar" />
+        <img src={avatar2} alt="User Avatar" />
         <div className="text">
         {/* {user ? <p>{user.email}</p> : <p>Loading...</p>} */}
         <h2>Aman</h2>

@@ -11,7 +11,7 @@ const TransactionService = {
     return privateAxios.get(`/user/${userId}/transactions/total`);
   },
   
-  getRecentHistory: (userId, limit = 10) => {
+  getRecentHistory: (userId, limit = 4) => {
     return privateAxios.get(`/user/${userId}/transactions/recent`, {
       params: { limit },
     });

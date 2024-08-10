@@ -23,7 +23,7 @@ const Income = () => {
     const [categories, setCategories] = useState([]);
     const [user, setUser] = useState(undefined);
     const [incomes, setIncomes] = useState({
-        source: '',
+        description: '',
         amount: '',
         date: '',
         category: ''
@@ -97,7 +97,7 @@ const Income = () => {
                     toast.success("Income Updated !!");
                     setEditingIncome(null);
                     setIncomes({
-                        source: '',
+                        description: '',
                         amount: '',
                         date: '',
                         category: ''
@@ -114,7 +114,7 @@ const Income = () => {
                 .then(data => {
                     toast.success("Income Created !!");
                     setIncomes({
-                        source: '',
+                        description: '',
                         amount: '',
                         date: '',
                         category: ''
@@ -135,7 +135,7 @@ const Income = () => {
         
         setEditingIncome(income);
         setIncomes({
-            source: income.source,
+            description: income.description,
             amount: income.amount,
             date: formattedDate,
             category: income.category
@@ -195,8 +195,8 @@ const Income = () => {
                                     <label className="block font-medium mb-1">
                                         <input
                                             type="text"
-                                            value={incomes.source}
-                                            onChange={(e) => fieldChanged(e, 'source')}
+                                            value={incomes.description}
+                                            onChange={(e) => fieldChanged(e, 'description')}
                                             required
                                             className="w-full border border-gray-300 rounded-lg p-2"
                                             placeholder="Income description"
@@ -264,7 +264,7 @@ const Income = () => {
                                                     <div className='flex flex-row gap-2 mt-1'>
                                                         <span className="mr-2">{rupee} {income.amount}</span>
                                                         <p className="text-sm">{calender} {income.date.join('-')}</p>
-                                                        <p className="ml-2">{comment}</p>{income.source || 'No description provided.'}
+                                                        <p className="ml-2">{comment}</p>{income.description || 'No description provided.'}
                                                     </div>
                                                 </div>
                                             </div>
