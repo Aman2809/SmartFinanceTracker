@@ -38,13 +38,13 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
 ## Screenshots
 
 ### Home Page
-![Home Page](frontend/src/img/HomePage.png)
+![Home Page](Frontend/src/img/HomePage.png)
 
 ### Dashboard
-![Dashboard](frontend/src/img/Dashboard.png)
+![Dashboard](Frontend/src/img/Dashboard.png)
 
 ### Adding Income
-![Adding Income](frontend/src/img/Income page.png)
+![Adding Income](Frontend/src/img/Income.png)
 
 
 ## Technologies Used
