@@ -4,12 +4,15 @@ import LoginPage from './LoginPage';
 import Modal from './Modal';
 import bg from '../img/bg.png';
 import Dashboard from '../img/Dashboard.png'
+import Expense from '../img/Expense.png'
+import Income from '../img/Income.png'
+import Footer from './Footer';
 
 function Home() {
 
   const style = {
     backgroundImage: `url(${bg})`,
-};
+  };
 
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -19,6 +22,9 @@ function Home() {
 
   return (
     <>
+
+      {/* <--------------------First Division----------------------> */}
+
       <div className="relative bg-pink-50 h-[100vh] flex flex-col items-center text-white">
         <Navbar openLoginModal={openLoginModal} />
 
@@ -39,13 +45,20 @@ function Home() {
         </div>
       </div>
 
+      {/* <--------------------First Division----------------------> */}
+
+
+
+      {/* //<--------------------Second Division----------------------> */}
+
+
       <div className='bg-gradient-to-r from-[#4688ce] to-[#ffffff] h-[100vh]'>
-        <div className='flex flex-col lg:flex-row px-8 justify-between space-x-10'>
-          <div className="lg:mt-10 lg:w-1/2 flex justify-center items-center">
-            <img src="./photo.jpg" alt="Dashboard Preview" className="w-full h-[60vh] lg:w-auto max-w-md" />
+        <div className='flex flex-col lg:flex-row pr-8 justify-between space-x-10'>
+          <div className="lg:mt-24 lg:w-full flex justify-center overflow-hidden items-center">
+            <img src={Expense} alt="Dashboard Preview" className="w-full h-[70vh] rounded-r-xl -left-12 lg:w-auto max-w-full" />
           </div>
 
-          <div className='mt-16 max-w-[40vw] ml-1 px-5'>
+          <div className='mt-36 max-w-[40vw] ml-1 px-5'>
             <h1 className='text-5xl mb-4 font-bold text-black'>Manage your expenses in one click.</h1>
             <p className='mb-8 text-lg text-black'>With Financify, easily manage your Expenses, Transactions, and define your Financial Goals easily and effortlessly</p>
 
@@ -56,11 +69,38 @@ function Home() {
           </div>
         </div>
       </div>
+      {/* //<--------------------Second Division----------------------> */}
 
-      <div className='HomeBottom bg-red-100 h-[70vh]'>
-        <h1>Third is the third Box</h1>
-        
+
+
+      {/* <--------------------Third Division----------------------> */}
+
+      <div className='bg-gradient-to-r from-[#ffffff] to-[#a3e080]  h-[100vh]'>
+        <div className='flex flex-col lg:flex-row px-8 justify-between space-x-10'>
+
+
+          <div className='mt-36 max-w-[40vw] ml-1 px-5'>
+            <h1 className='text-5xl mb-4 font-bold text-black'>Easily Track Your Incomes.</h1>
+            <p className='mb-8 text-lg text-black'>With Financify, easily manage your Incomes, Transactions, and define your Financial Goals easily and effortlessly</p>
+
+            <div className="flex justify-center lg:justify-start space-x-4">
+              <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Get Started</button>
+              <button className="px-11 py-2 text-black rounded hover:bg-white hover:text-black font-bold">See how it works?</button>
+            </div>
+          </div>
+
+          <div className="lg:mt-24 lg:w-full flex justify-center overflow-hidden items-center" style={{ marginRight: '-2rem' }}>
+            <img src={Income} alt="Dashboard Preview" className="w-full h-[75vh] lg:w-auto max-w-full" />
+          </div>
+
+
+        </div>
       </div>
+
+
+      {/* <--------------------Third Division----------------------> */}
+
+      <Footer/>
 
       <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
         <LoginPage />
