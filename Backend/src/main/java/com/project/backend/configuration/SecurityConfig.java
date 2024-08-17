@@ -47,6 +47,7 @@ public class SecurityConfig {
                     // Allow specific endpoints like login and register
                     .requestMatchers("/api/v1/auth/login").permitAll()
                     .requestMatchers("/api/v1/auth/register").permitAll()
+                    .requestMatchers("/api/v1/predict/transaction").permitAll()
                     // Allow API documentation
                     .requestMatchers("/v3/api-docs").permitAll()
                     // Authenticate all other requests

@@ -10,6 +10,8 @@ import com.project.backend.model.PredictionRequest;
 import com.project.backend.model.PredictionResponse;
 import com.project.backend.services.PythonService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 @RestController
 @RequestMapping("/api/v1/predict")
 public class TransactionPredictionController {
@@ -21,9 +23,10 @@ public class TransactionPredictionController {
     }
 
     @PostMapping("/transaction")
+    @CrossOrigin(origins = "http://localhost:5173") // Allow requests from this origin
     public ResponseEntity<PredictionResponse> predictTransaction(@RequestBody PredictionRequest request) {
-        // Call the Python NLP model via the PythonService
         PredictionResponse response = pythonService.predictTransaction(request.getText());
         return ResponseEntity.ok(response);
     }
 }
+
