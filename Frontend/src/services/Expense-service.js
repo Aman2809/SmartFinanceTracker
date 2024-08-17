@@ -1,6 +1,23 @@
 // src/services/ExpenseService.js
 import { myAxios, privateAxios } from "./helper";
 
+
+
+//Text-to-form Fillup
+export const ExpenseFormFillup = async (text)=>{
+    try {
+        const response = await privateAxios.post('/predict/transaction', {
+                text: text
+            });
+            return response.data;
+    }catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Failed to parse the text input.');
+    }
+};
+
+
+
 // Create Expense
 export const createExpenseData = async (expenseData) => {
     try {

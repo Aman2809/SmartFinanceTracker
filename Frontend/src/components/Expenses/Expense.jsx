@@ -12,12 +12,14 @@ import {
 import { getCurrentUser } from '../../jwtAuth/auth';
 import { toast } from 'react-toastify';
 import { food,edit, transportation, house, healthcare, entertainment, education, personalCare, investment, gifts, travel, shopping, utility, trash, other, comment, calender, plus, rupee } from '../../utils/Icon';
+import { ExpenseFormFillup } from '../../services/Expense-service';
 
 const Expense = () => {
   const style = {
     backgroundImage: `url(${bg})`,
   };
 
+  const [textInput, setTextInput] = useState(''); // State for the text input
   const [expenseList, setExpenseList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [user, setUser] = useState(undefined);
@@ -196,6 +198,31 @@ const Expense = () => {
     }
   };
 
+  const handleTextInputChange = (e) => {
+    setTextInput(e.target.value);
+};
+
+const handleTextSubmit = async (e) => {
+  e.preventDefault();
+  
+ 
+      const data = await ExpenseFormFillup(textInput);
+       // Convert date from 'dd/mm/yyyy' to 'yyyy-mm-dd'
+  const [day, month, year] = data.date.split('-');
+  const formattedDate = `${year}-${month}-${day}`;
+
+
+
+      // Update the form fields with the received data
+      setExpenses({
+          amount: data.amount,
+          date: formattedDate,
+          description: data.description,
+          category: data.category
+      });
+  
+};
+
   const handlePageChange = (newPage) => {
     if (newPage >= 0 && newPage < totalPages) {
       setCurrentPage(newPage);
@@ -211,6 +238,17 @@ const Expense = () => {
           <h2 className="total-expense flex justify-center items-center p-4 mt-2 mb-4 mx-0 bg-[#fcf6f9] border-2 border-white shadow-[0px_1px_15px_rgba(0,0,0,0.06)] rounded-[20px] text-2xl gap-2">
             Total Expense: <span className="text-2.5xl font-extrabold text-red-500">{rupee}{totalExpense}</span>
           </h2>
+          <div className='flex gap-3  mb-2 '>
+                    <input
+                    type='text'
+                    value={textInput}
+                    onChange={handleTextInputChange}
+                    required
+                    placeholder="Describe the transaction"
+                    className='h-10 rounded-xl shadow-lg p-3 border-gray-300 w-2/3 '
+                />
+                <button  onClick ={handleTextSubmit} className='bg-blue-500 rounded-lg px-2 h-10 text-white' type="button">Fill Form</button>
+                    </div>
           <div className="flex flex-col md:flex-row gap-8">
             <div className="w-full md:w-1/4">
               <form onSubmit={createOrUpdateExpense} className="space-y-4">

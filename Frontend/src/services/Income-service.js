@@ -1,5 +1,21 @@
-// src/services/IncomeService.js
+// src/services/Income-service.js
 import { myAxios ,privateAxios} from "./helper";
+
+
+
+//Text-to-form Fillup
+export const FormFillup = async (text)=>{
+    try {
+        const response = await privateAxios.post('/predict/transaction', {
+                text: text
+            });
+            return response.data;
+    }catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Failed to parse the text input.');
+    }
+};
+
 
 
 
