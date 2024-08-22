@@ -63,7 +63,7 @@ categories = {**expense_categories, **income_categories}
 
 # Amounts and dates for synthetic data generation
 amounts = ["100", "500", "1000", "2000", "5000", "750", "1200", "150", "3500", "900", "4500","787","453","8766","3945","871","231","981","98","76","56","40","30","454734","78564","45097","76421","78643","08976","76531","987542","987341","90743","200","732","134","763","742","965","842","8754"]
-dates = ["1st January 2024", "15th February 2024", "23rd March 2024", "7th April 2024", "10th May 2024", "30th June 2024", "18th July 2024", "12th August 2024", "25th September 2024", "5th October 2024","19th November 2024","23rd December 2024","11th November 2024","29th February 2024","31st January 2024"]
+dates = ["1st January 2024", "5th March 2024" ,"3rd September 2024" , "15th February 2024", "23rd March 2024", "7th April 2024", "10th May 2024", "30th June 2024", "18th July 2024", "12th August 2024", "25th September 2024", "5th October 2024","19th November 2024","23rd December 2024","11th November 2024","29th February 2024","31st January 2024"]
 
 # Generate synthetic data
 training_data = []
@@ -124,7 +124,8 @@ new_data = ["1786 rs movie tickets on 10 Nov 2024",  # Expected: ENTERTAINMENT
             "2556 rs doctor consultation on 5th December 2024",  # Expected: HEALTHCARE
             "103200 rs stock investment on 2nd January 2024",  # Expected: INVESTMENT
             "1876 rs salary received on 1st February 2024",  # Expected: SALARY
-            "1700 rs groceries on 3 Mar 2024"]  # Expected: FOOD
+            "1700 rs groceries on 3 Mar 2024",
+            "5000 rs groceries on 3rd March 2024"]  # Expected: FOOD
 
 # Transform the new data using the same vectorizer
 new_data_vectorized = vectorizer.transform(new_data)
