@@ -12,7 +12,7 @@ import {
 } from '../../services/Income-service';
 import { getCurrentUser } from '../../jwtAuth/auth';
 import { toast } from 'react-toastify';
-import { salary,edit, rental, business, investment, interest, trash, other, dollar, comment, calender,plus,rupee } from '../../utils/Icon';
+import { salary, edit, rental, business, investment, interest, trash, other, dollar, comment, calender, plus, rupee, freelance, pension, royalties, capital_gains, dividends, bonuses, commisions, child_support, alimony, social_security, annuities, lottery, grants, inheritence } from '../../utils/Icon';
 import { FormFillup } from '../../services/Income-service';
 
 const Income = () => {
@@ -134,7 +134,7 @@ const Income = () => {
     const startEdit = (income) => {
         // Convert the date to yyyy-mm-dd format
         const formattedDate = new Date(income.date).toISOString().split('T')[0];
-        
+
         setEditingIncome(income);
         setIncomes({
             description: income.description,
@@ -143,7 +143,7 @@ const Income = () => {
             category: income.category
         });
     };
-    
+
 
     const deleteIncomeHandler = (incomeId) => {
         deleteIncome(incomeId)
@@ -170,6 +170,35 @@ const Income = () => {
                 return rental;
             case 'INVESTMENT':
                 return investment;
+            case 'FREELANCE':
+                return freelance;
+            case 'PENSION':
+                return pension;
+            case 'ROYALTIES':
+                return royalties;
+            case 'CAPITAL_GAINS':
+                return capital_gains;
+            case 'DIVIDENDS':
+                return dividends;
+            case 'BONUSES':
+                return bonuses;
+            case 'COMMISSIONS':
+                return commisions;
+            case 'CHILD_SUPPORT':
+                return child_support;
+            case 'ALIMONY':
+                return alimony;
+            case 'SOCIAL_SECURITY':
+                return social_security;
+            case 'ANNUITIES':
+                return annuities;
+            case 'LOTTERY':
+                return lottery;
+            case 'GRANTS':
+                return grants;
+            case 'INHERITANCE':
+                return inheritence;
+
             default:
                 return other;
         }
@@ -181,23 +210,23 @@ const Income = () => {
 
     const handleTextSubmit = async (e) => {
         e.preventDefault();
-        
-       
-            const data = await FormFillup(textInput);
-             // Convert date from 'dd/mm/yyyy' to 'yyyy-mm-dd'
+
+
+        const data = await FormFillup(textInput);
+        // Convert date from 'dd/mm/yyyy' to 'yyyy-mm-dd'
         const [day, month, year] = data.date.split('-');
         const formattedDate = `${year}-${month}-${day}`;
 
 
 
-            // Update the form fields with the received data
-            setIncomes({
-                amount: data.amount,
-                date: formattedDate,
-                description: data.description,
-                category: data.category
-            });
-        
+        // Update the form fields with the received data
+        setIncomes({
+            amount: data.amount,
+            date: formattedDate,
+            description: data.description,
+            category: data.category
+        });
+
     };
 
 
@@ -218,15 +247,15 @@ const Income = () => {
                         Total Income: <span className="text-2.5xl font-extrabold text-green-500"> {rupee}{totalIncome}</span>
                     </h2>
                     <div className='flex gap-3  mb-2 '>
-                    <input
-                    type='text'
-                    value={textInput}
-                    onChange={handleTextInputChange}
-                    required
-                    placeholder="Describe the transaction"
-                    className='h-10 rounded-xl shadow-lg p-3 border-gray-300 w-2/3 '
-                />
-                <button  onClick ={handleTextSubmit} className='bg-blue-500 rounded-lg px-2 h-10 text-white' type="button">Fill Form</button>
+                        <input
+                            type='text'
+                            value={textInput}
+                            onChange={handleTextInputChange}
+                            required
+                            placeholder="Describe the transaction"
+                            className='h-10 rounded-xl shadow-lg p-3 border-gray-300 w-2/3 '
+                        />
+                        <button onClick={handleTextSubmit} className='bg-blue-500 rounded-lg px-2 h-10 text-white' type="button">Fill Form</button>
                     </div>
                     <div className="flex flex-col md:flex-row gap-8">
                         <div className="w-full md:w-1/4">

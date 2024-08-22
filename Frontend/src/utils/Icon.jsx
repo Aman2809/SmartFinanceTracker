@@ -10,7 +10,7 @@ export const money = <i className="fa-solid fa-money-bill"></i>
 export const freelance = <i className ="fa-solid fa-earth-americas"></i>
 export const stocks = <i className="fa-solid fa-arrow-trend-up"></i>
 export const bitcoin = <i className="fa-brands fa-bitcoin"></i>
-export const piggy = <i className="fa-solid fa-piggy-bank"></i>
+export const pension = <i className="fa-solid fa-piggy-bank"></i>
 export const yt = <i className="fa-brands fa-youtube"></i>
 export const card = <i className="fa-brands fa-cc-visa"></i>
 export const users = <i className="fa-solid fa-users-between-lines"></i>
@@ -45,3 +45,23 @@ export const travel = <i class="fa-solid fa-truck-plane"></i>
 export const gifts =<i class="fa-solid fa-gifts"></i>
 export const house = <i class="fa-solid fa-house"></i>
 export const edit = <i class="fa-solid fa-pen-to-square"></i>
+export const royalties =<i class="fa-solid fa-crown"></i>
+export const capital_gains=<i class="fa-solid fa-chart-line"></i>
+export const dividends =<i class="fa-solid fa-coins"></i>
+export const bonuses =<i class="fa-solid fa-award"></i>
+export const commisions = <i class="fa-solid fa-handshake"></i>
+export const child_support=<i class="fa-solid fa-hand-holding-heart"></i>
+export const alimony=<i class="fa-solid fa-scale-balanced"></i>
+export const social_security =<i class="fa-solid fa-shield-halved"></i>
+export const annuities=<i class="fa-solid fa-calendar-days"></i>
+export const lottery =<i class="fa-solid fa-ticket"></i>
+export const grants =<i class="fa-solid fa-money-check-dollar"></i>
+export const inheritence =<i class="fa-solid fa-scroll"></i>
+export const insaurance =<i class="fa-solid fa-shield"></i>
+export const debt_pay=<i class="fa-solid fa-money-check-dollar"></i>
+export const child_care =<i class="fa-solid fa-baby-carriage"></i>
+export const pet_care=<i class="fa-solid fa-paw"></i>
+export const subscriptions =<i class="fa-solid fa-file-invoice"></i>
+export const taxes =<i class="fa-solid fa-file-invoice-dollar"></i>
+export const maintainance =<i class="fa-solid fa-screwdriver-wrench"></i>
+export const comminication=<i class="fa-solid fa-phone"></i>
