@@ -25,4 +25,10 @@ export const menuItems = [
         icon: expenses,
         link: "/user/expense"
     },
+    {
+        id: 5,
+        title: "Goals",
+        icon: expenses,
+        link: "/user/financial-goals"
+    },
 ];

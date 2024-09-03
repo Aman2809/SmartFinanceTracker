@@ -7,6 +7,7 @@ import Dashboard from '../img/Dashboard.png'
 import Expense from '../img/Expense.png'
 import Income from '../img/Income.png'
 import Footer from './Footer';
+import { Link } from 'react-router-dom';
 
 function Home() {
 
@@ -34,7 +35,9 @@ function Home() {
             <p className='mb-8 text-lg font-semibold text-black'>With Financify, easily manage your Expenses, Transactions, and define your Financial Goals easily and effortlessly</p>
 
             <div className="flex justify-center lg:justify-start space-x-4">
-              <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Get Started</button>
+            <Link to="/user/dashboard">
+                <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Get Started</button>
+              </Link>
               <button className="px-11 py-2 text-black rounded hover:bg-white hover:text-black font-bold">See how it works?</button>
             </div>
           </div>
@@ -62,9 +65,11 @@ function Home() {
             <h1 className='text-5xl mb-4 font-bold text-black'>Manage your expenses in one click.</h1>
             <p className='mb-8 text-lg text-black'>With Financify, easily manage your Expenses, Transactions, and define your Financial Goals easily and effortlessly</p>
 
-            <div className="flex justify-center lg:justify-start space-x-4">
-              <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Get Started</button>
-              <button className="px-11 py-2 text-black rounded hover:bg-white hover:text-black font-bold">See how it works?</button>
+            <div className="flex justify-center items-center lg:justify-start ">
+              <Link to="/user/expense">
+                <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Add Expense</button>
+              </Link>
+              {/* <button className="px-11 py-2 text-black rounded hover:bg-white hover:text-black font-bold">See how it works?</button> */}
             </div>
           </div>
         </div>
@@ -83,9 +88,11 @@ function Home() {
             <h1 className='text-5xl mb-4 font-bold text-black'>Easily Track Your Incomes.</h1>
             <p className='mb-8 text-lg text-black'>With Financify, easily manage your Incomes, Transactions, and define your Financial Goals easily and effortlessly</p>
 
-            <div className="flex justify-center lg:justify-start space-x-4">
-              <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Get Started</button>
-              <button className="px-11 py-2 text-black rounded hover:bg-white hover:text-black font-bold">See how it works?</button>
+            <div className="flex justify-center items-center lg:justify-start ">
+              <Link to="/user/income">
+                <button className="px-11 py-2 bg-pink-300 text-black rounded hover:bg-pink-400 font-bold">Add Incomes</button>
+              </Link>
+              {/* <button className="px-11 py-2 text-black rounded hover:bg-white hover:text-black font-bold">See how it works?</button> */}
             </div>
           </div>
 
@@ -100,7 +107,7 @@ function Home() {
 
       {/* <--------------------Third Division----------------------> */}
 
-      <Footer/>
+      <Footer />
 
       <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
         <LoginPage />
