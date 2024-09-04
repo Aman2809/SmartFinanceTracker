@@ -65,3 +65,4 @@ export const subscriptions =<i class="fa-solid fa-file-invoice"></i>
 export const taxes =<i class="fa-solid fa-file-invoice-dollar"></i>
 export const maintainance =<i class="fa-solid fa-screwdriver-wrench"></i>
 export const comminication=<i class="fa-solid fa-phone"></i>
+export const goals = <i class="fa-solid fa-bullseye"></i>

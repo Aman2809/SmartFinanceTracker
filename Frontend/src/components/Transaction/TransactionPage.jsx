@@ -6,6 +6,7 @@ import bg from '../../img/bg.png';
 import Navigation from '../Navigation/Navigation';
 import TransactionService from '../../services/Transaction-service';
 import { getCurrentUser } from '../../jwtAuth/auth';
+import { getFinancialGoalsByUser } from '../../services/FinancialGoals-service'; 
 
 const TransactionPage = () => {
 
@@ -20,6 +21,8 @@ const TransactionPage = () => {
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalBalance, setTotalBalance] = useState(0);
     const [user, setUser] = useState(undefined);
+    const [recentGoals, setRecentGoals] = useState([]); // State for recent goals
+
 
     useEffect(() => {
         setUser(getCurrentUser());
@@ -30,6 +33,7 @@ const TransactionPage = () => {
             fetchGraphData();
             fetchTotals();
             fetchRecentTransactions();
+            fetchRecentGoals();
         }
     }, [user]);
 
@@ -66,6 +70,18 @@ const TransactionPage = () => {
         } catch (error) {
             console.error('Error fetching recent transactions:', error);
             setTransactions([]);
+        }
+    };
+
+     // Fetch the recent financial goals
+     const fetchRecentGoals = async () => {
+        try {
+            const userId = user.id;
+            const response = await getFinancialGoalsByUser(userId, 0, 2); // Fetch only the 2 most recent goals
+            setRecentGoals(response.goalsContent); // Ensure goalsContent is the correct field
+        } catch (error) {
+            console.error('Error fetching recent goals:', error);
+            setRecentGoals([]);
         }
     };
     
@@ -170,19 +186,33 @@ const TransactionPage = () => {
                             </ul>
 
                         </div>
-                        {/* Financial Goals Section */}
-                        <div className=" p-6 rounded-2xl h-[40%]">
+                         {/* Financial Goals Section */}
+                         <div className="p-6 rounded-2xl h-[40%]">
                             <h3 className="text-xl font-bold mb-2">Financial Goals</h3>
-                            {/* Add your financial goals content here */}
+                            <ul className="space-y-1">
+                                {recentGoals.length > 0 ? (
+                                    recentGoals.map((goal, index) => (
+                                        <li
+                                            key={`${goal.goalTitle}-${goal.targetDate}-${index}`}
+                                            className="bg-white rounded-2xl shadow-md p-4 flex items-center justify-between"
+                                        >
+                                            <div className="text-lg">
+                                                <p>{goal.goalTitle}</p>
+                                                <span className="text-sm text-gray-500">{goal.name}</span>
+                                            </div>
+                                            <p className="text-lg text-blue-500">₹{goal.targetAmount}</p>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <p>No recent goals available.</p>
+                                )}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-
-
-
 };
 
 export default TransactionPage;

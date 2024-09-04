@@ -17,9 +17,9 @@ export const createFinancialGoal = async (goalData) => {
 };
 
 // Update Financial Goal
-export const updateFinancialGoal = async (goalId, goalDto) => {
+export const updateFinancialGoal = async (goalsId, goalDto) => {
     try {
-        const response = await privateAxios.put(`/goals/${goalId}`, goalDto);
+        const response = await privateAxios.put(`/financial-goals/${goalsId}`, goalDto);
         return response.data;
     } catch (error) {
         console.error("Error in updateFinancialGoal:", error.response || error.message);
@@ -28,9 +28,9 @@ export const updateFinancialGoal = async (goalId, goalDto) => {
 };
 
 // Get Financial Goal By ID
-export const getFinancialGoalById = async (goalId) => {
+export const getFinancialGoalById = async (goalsId) => {
     try {
-        const response = await privateAxios.get(`/goals/${goalId}`);
+        const response = await privateAxios.get(`/financial-goals/${goalsId}`);
         return response.data;
     } catch (error) {
         console.error("Error in getFinancialGoalById:", error.response || error.message);
@@ -39,9 +39,9 @@ export const getFinancialGoalById = async (goalId) => {
 };
 
 // Get Financial Goals By User
-export const getFinancialGoalsByUser = async (userId, pageNumber = 0, pageSize = 5, sortBy = 'goalId', sortDir = 'asc') => {
+export const getFinancialGoalsByUser = async (userId, pageNumber = 0, pageSize = 5, sortBy = 'goalsId', sortDir = 'asc') => {
     try {
-        const response = await myAxios.get(`/user/${userId}/goals`, {
+        const response = await privateAxios.get(`/user/${userId}/financial-goals`, {
             params: { pageNumber, pageSize, sortBy, sortDir }
         });
         return response.data;
@@ -52,9 +52,9 @@ export const getFinancialGoalsByUser = async (userId, pageNumber = 0, pageSize =
 };
 
 // Delete Financial Goal
-export const deleteFinancialGoal = async (goalId) => {
+export const deleteFinancialGoal = async (goalsId) => {
     try {
-        const response = await privateAxios.delete(`/goals/${goalId}`);
+        const response = await privateAxios.delete(`/financial-goals/${goalsId}`);
         return response.data;
     } catch (error) {
         console.error("Error in deleteFinancialGoal:", error.response || error.message);
@@ -65,7 +65,7 @@ export const deleteFinancialGoal = async (goalId) => {
 // Search Financial Goals by Keywords
 export const searchFinancialGoals = async (keywords) => {
     try {
-        const response = await myAxios.get(`/goals/search`, {
+        const response = await privateAxios.get(`/financial-goals/search`, {
             params: { keywords }
         });
         return response.data;
