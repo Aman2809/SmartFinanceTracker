@@ -2,12 +2,14 @@ package com.project.backend.services.impl;
 
 
 import com.project.backend.model.Expense;
+import com.project.backend.model.FinancialGoals;
 import com.project.backend.model.Income;
 import com.project.backend.payloads.GraphDataDto;
 import com.project.backend.payloads.TotalResponse;
 import com.project.backend.payloads.RecentHistoryResponse;
 import com.project.backend.payloads.TransactionDto;
 import com.project.backend.repository.ExpenseRepository;
+import com.project.backend.repository.FinancialGoalsRepository;
 import com.project.backend.repository.IncomeRepository;
 import com.project.backend.services.TransactionService;
 import org.modelmapper.ModelMapper;
@@ -84,6 +86,7 @@ public class TransactionServiceImpl implements TransactionService {
     public RecentHistoryResponse getRecentHistory(Long userId, int limit) {
         List<Income> incomes = incomeRepository.findByUser_UserId(userId, PageRequest.of(0, Integer.MAX_VALUE)).getContent();
         List<Expense> expenses = expenseRepository.findByUser_UserId(userId, PageRequest.of(0, Integer.MAX_VALUE)).getContent();
+        
 
         List<TransactionDto> transactions = new ArrayList<>();
 
