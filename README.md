@@ -1,11 +1,11 @@
 
 ---
 
-# SmartFinancialAdvisor
+# SmartFinanceTracker
 
 ## Overview
 
-SmartFinancialAdvisor is a comprehensive web application designed to help users manage their finances effectively. The application offers features like income and expense tracking, financial goal setting, and transaction management. The project utilizes a combination of modern technologies, including Spring Boot for the backend and React for the frontend, along with AI and ML functionalities to enhance financial insights and decision-making.
+SmartFinanceTracker is a comprehensive web application designed to help users manage their finances effectively. The application offers features like income and expense tracking, financial goal setting, and transaction management. The project utilizes a combination of modern technologies, including Spring Boot for the backend and React for the frontend, along with AI and ML functionalities to enhance financial insights and decision-making.
 
 ## Features
 
@@ -33,7 +33,7 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
   
 - **AI & ML Integration**
   - Implementation of AI and ML functionalities to provide personalized financial advice.
- 
+  - **Automatic Form Fillup:** Use ML to automatically categorize transactions and fill up forms based on user input descriptions.
 
 ## Screenshots
 
@@ -45,7 +45,6 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
 
 ### Adding Income
 ![Adding Income](Frontend/src/img/Income.png)
-
 
 ## Technologies Used
 
@@ -101,7 +100,7 @@ SmartFinancialAdvisor is a comprehensive web application designed to help users 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/Aman2809/SmartFinancialAdvisor.git
+git clone https://github.com/Aman2809/SmartFinanceTracker.git
 ```
 
 ### Backend Setup
@@ -153,5 +152,3 @@ This project is licensed under the MIT License.
 For any queries or issues, feel free to contact me at jhaaman1005@gmail.com.
 
 ---
-
-
