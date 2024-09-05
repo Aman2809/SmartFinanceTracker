@@ -2,18 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import bg from '../../img/bg.png';
-
 import Navigation from '../Navigation/Navigation';
 import TransactionService from '../../services/Transaction-service';
 import { getCurrentUser } from '../../jwtAuth/auth';
-import { getFinancialGoalsByUser } from '../../services/FinancialGoals-service'; 
+import { getFinancialGoalsByUser } from '../../services/FinancialGoals-service';
 
 const TransactionPage = () => {
-
     const style = {
         backgroundImage: `url(${bg})`,
     };
-
 
     const [graphData, setGraphData] = useState([]);
     const [transactions, setTransactions] = useState([]);
@@ -22,7 +19,6 @@ const TransactionPage = () => {
     const [totalBalance, setTotalBalance] = useState(0);
     const [user, setUser] = useState(undefined);
     const [recentGoals, setRecentGoals] = useState([]); // State for recent goals
-
 
     useEffect(() => {
         setUser(getCurrentUser());
@@ -65,7 +61,6 @@ const TransactionPage = () => {
         try {
             const userId = user.id;
             const response = await TransactionService.getRecentHistory(userId);
-            console.log('Full Transaction Data:', response.data.recentTransactions);
             setTransactions(response.data.recentTransactions.slice(0, 3) || []);
         } catch (error) {
             console.error('Error fetching recent transactions:', error);
@@ -73,8 +68,7 @@ const TransactionPage = () => {
         }
     };
 
-     // Fetch the recent financial goals
-     const fetchRecentGoals = async () => {
+    const fetchRecentGoals = async () => {
         try {
             const userId = user.id;
             const response = await getFinancialGoalsByUser(userId, 0, 2); // Fetch only the 2 most recent goals
@@ -84,8 +78,6 @@ const TransactionPage = () => {
             setRecentGoals([]);
         }
     };
-    
-    
 
     const generateGraph = () => {
         if (!graphData || graphData.length === 0) {
@@ -93,7 +85,7 @@ const TransactionPage = () => {
         }
 
         return (
-            <div className="w-full bg-white p-6 rounded-2xl shadow-md h-full"> {/* Set a fixed height for the graph */}
+            <div className="w-full bg-white p-6 rounded-2xl shadow-md h-full">
                 <Bar
                     data={{
                         labels: graphData.map(item => item.date),
@@ -128,6 +120,11 @@ const TransactionPage = () => {
         );
     };
 
+    // Calculate progress based on total balance
+    const calculateProgress = (targetAmount) => {
+        return Math.min((totalBalance / targetAmount) * 100, 100); // Cap at 100%
+    };
+
     return (
         <div style={style} className="flex">
             <Navigation />
@@ -141,7 +138,7 @@ const TransactionPage = () => {
                             {generateGraph()}
                         </div>
                         {/* Totals Section */}
-                        <div className=" p-6 rounded-2xl flex flex-col space-y-4 h-[40%]">
+                        <div className="p-6 rounded-2xl flex flex-col space-y-4 h-[40%]">
                             <div className="flex space-x-4 h-1/2">
                                 <div className="w-1/2 flex flex-col shadow-md justify-center items-center bg-white rounded-2xl">
                                     <h3 className="text-lg font-semibold mb-2 text-center">Total Income</h3>
@@ -161,21 +158,19 @@ const TransactionPage = () => {
                     {/* Right Side: Recent Transactions and Financial Goals */}
                     <div className="flex flex-col w-[37%]">
                         {/* Recent Transactions */}
-                        <div className=" p-6 rounded-2xl flex flex-col space-y-1 h-[60%]">
+                        <div className="p-6 rounded-2xl flex flex-col space-y-1 h-[60%]">
                             <h3 className="text-2xl font-bold mb-2">Recent Transactions</h3>
                             <ul className="space-y-4">
                                 {transactions.length > 0 ? (
                                     transactions.map((transaction, index) => (
                                         <li
                                             key={`${transaction.description}-${transaction.date}-${index}`}
-                                           className="bg-white rounded-2xl shadow-md p-4 flex items-center justify-between"
+                                            className="bg-white rounded-2xl shadow-md p-4 flex items-center justify-between"
                                         >
                                             <div className="text-lg">
                                                 <p>{transaction.description}</p>
-                                                {/* <span className="text-sm text-gray-500">{transaction.date}</span> */}
                                             </div>
                                             <p className={`text-lg ${transaction.type === 'income' ? 'text-green-500' : 'text-red-500'}`}>
-
                                                 ₹{transaction.amount}
                                             </p>
                                         </li>
@@ -184,23 +179,26 @@ const TransactionPage = () => {
                                     <p>No recent transactions available.</p>
                                 )}
                             </ul>
-
                         </div>
-                         {/* Financial Goals Section */}
-                         <div className="p-6 rounded-2xl h-[40%]">
-                            <h3 className="text-xl font-bold mb-2">Financial Goals</h3>
-                            <ul className="space-y-1">
+                        {/* Financial Goals Section */}
+                        <div className="p-6 rounded-2xl h-[40%]">
+                            <h3 className="text-xl font-bold mb-1">Financial Goals</h3>
+                            <ul className="space-y-3">
                                 {recentGoals.length > 0 ? (
                                     recentGoals.map((goal, index) => (
                                         <li
                                             key={`${goal.goalTitle}-${goal.targetDate}-${index}`}
-                                            className="bg-white rounded-2xl shadow-md p-4 flex items-center justify-between"
+                                            className="bg-white rounded-2xl shadow-md p-2 flex items-center justify-between relative"
+                                            style={{
+                                                
+                                                background: `linear-gradient(90deg, rgba(173, 216, 230, 1) ${calculateProgress(goal.targetAmount)}%, white 0%)`,
+                                            }}
                                         >
                                             <div className="text-lg">
                                                 <p>{goal.goalTitle}</p>
-                                                <span className="text-sm text-gray-500">{goal.name}</span>
+                                                <span className="text-lg font-semibold text-black">{goal.name}</span>
                                             </div>
-                                            <p className="text-lg text-blue-500">₹{goal.targetAmount}</p>
+                                            <p className="text-lg font-bold text-blue-500">₹{goal.targetAmount}</p>
                                         </li>
                                     ))
                                 ) : (
