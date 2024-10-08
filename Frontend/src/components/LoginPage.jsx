@@ -17,7 +17,7 @@ const LoginPage = ({ onClose }) => {
 
   const handleChange = (e, field) => {
     setData({ ...data, [field]: e.target.value });
-    console.log(data);
+    // console.log(data);
   };
 
   const onSubmit = (event) => {
