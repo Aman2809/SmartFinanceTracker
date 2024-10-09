@@ -7,8 +7,14 @@ export const signUp=(user)=>{
 }
 
 
-export const loginUser=(data)=>{
+// export const loginUser=(data)=>{
+//     return myAxios
+//     .post("/auth/login",data)
+//     .then((response)=>response.data)
+// }
+
+export const loginUser = (data) => {
     return myAxios
-    .post("/auth/login",data)
-    .then((response)=>response.data)
+        .post("http://financetracker.eu-north-1.elasticbeanstalk.com/api/v1/auth/login", data)
+        .then((response) => response.data);
 }
