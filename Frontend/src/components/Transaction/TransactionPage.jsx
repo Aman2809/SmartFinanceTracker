@@ -6,6 +6,8 @@ import Navigation from '../Navigation/Navigation';
 import TransactionService from '../../services/Transaction-service';
 import { getCurrentUser } from '../../jwtAuth/auth';
 import { getFinancialGoalsByUser } from '../../services/FinancialGoals-service';
+import { Menu } from 'lucide-react';
+
 
 const TransactionPage = () => {
     const style = {
@@ -18,6 +20,7 @@ const TransactionPage = () => {
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalBalance, setTotalBalance] = useState(0);
     const [user, setUser] = useState(undefined);
+    const [isNavOpen, setIsNavOpen] = useState(false);
     const [recentGoals, setRecentGoals] = useState([]); // State for recent goals
 
     useEffect(() => {
@@ -85,7 +88,7 @@ const TransactionPage = () => {
         }
 
         return (
-            <div className="w-full bg-white p-6 rounded-2xl shadow-md h-full">
+            <div className="w-full bg-white p-4 md:p-6 rounded-2xl shadow-md h-full">
                 <Bar
                     data={{
                         labels: graphData.map(item => item.date),
@@ -120,25 +123,73 @@ const TransactionPage = () => {
         );
     };
 
+
     // Calculate progress based on total balance
     const calculateProgress = (targetAmount) => {
         return Math.min((totalBalance / targetAmount) * 100, 100); // Cap at 100%
     };
 
     return (
+
+
+
         <div style={style} className="flex">
-            <Navigation />
-            <div className="flex-1 h-[94vh] bg-[rgba(252,246,249,0.78)] rounded-2xl flex flex-col ml-2 mr-8 p-8 my-auto">
-                <h2 className="text-3xl font-bold mb-2">All Transactions</h2>
-                <div className="flex flex-row space-x-4 mb-1">
+            {/* Mobile Navigation Toggle */}
+            <div className="md:hidden fixed top-0 left-0 p-4 z-50">
+                <button
+                    onClick={() => setIsNavOpen(!isNavOpen)}
+                    className="text-gray-500 bg-white rounded-full p-2 shadow-md"
+                >
+                    <Menu size={24} />
+                </button>
+            </div>
+
+            {/* Sliding Navigation for mobile */}
+            <div
+                className={`fixed inset-y-0 left-0 transform ${isNavOpen ? 'translate-x-0' : '-translate-x-full'
+                    } md:translate-x-0 transition duration-200 ease-in-out z-30 md:relative md:flex`}
+            >
+                <div className=" bg-gray-100 h-full w-64 shadow-lg overflow-x-hidden overflow-y-auto md:hidden">
+                    <Navigation />
+                </div>
+            </div>
+
+            {/* Desktop Table View */}
+            <style>
+                {`
+            @media (min-width: 768px) {
+              .desktop-table {
+                display: block !important;
+              }
+            }
+            @media (max-width: 767px) {
+              .desktop-table {
+                display: none !important;
+              }
+            }
+          `}
+            </style>
+
+
+            <div className='desktop-table'>
+                <Navigation />
+
+            </div>
+
+
+
+            {/* <Navigation /> */}
+            <div className="flex-1 h-full md:h-[94vh] bg-[rgba(252,246,249,0.78)] rounded-2xl flex flex-col md:ml-2 md:mr-8 p-8 my-auto">
+                <h2 className="text-3xl md:text-left text-center -mt-4 font-bold mb-10 md:mb-2">Dashboard</h2>
+                <div className="flex flex-col md:flex-row space-x-4 mb-1">
                     {/* Left Side: Graph and Totals */}
-                    <div className="flex flex-col w-[63%] space-y-4">
+                    <div className="flex flex-col w-full md:w-[63%] space-y-4">
                         {/* Graph Section */}
-                        <div className="bg-white p-6 rounded-2xl shadow-md h-[60%]">
+                        <div className="bg-white p-6 rounded-2xl shadow-md h-[300px] md:h-[60%]">
                             {generateGraph()}
                         </div>
                         {/* Totals Section */}
-                        <div className="p-6 rounded-2xl flex flex-col space-y-4 h-[40%]">
+                        <div className="p-6 rounded-2xl flex flex-col space-y-3 h-[40%]">
                             <div className="flex space-x-4 h-1/2">
                                 <div className="w-1/2 flex flex-col shadow-md justify-center items-center bg-white rounded-2xl">
                                     <h3 className="text-lg font-semibold mb-2 text-center">Total Income</h3>
@@ -155,10 +206,12 @@ const TransactionPage = () => {
                             </div>
                         </div>
                     </div>
+
+                    
                     {/* Right Side: Recent Transactions and Financial Goals */}
-                    <div className="flex flex-col w-[37%]">
+                    <div className="flex flex-col w-full my-auto md:w-[37%]">
                         {/* Recent Transactions */}
-                        <div className="p-6 rounded-2xl flex flex-col space-y-1 h-[60%]">
+                        <div className="p-6 rounded-2xl flex flex-col -ml-3 mr-7 md:mr-0 md:ml-0 space-y-1 h-[60%]">
                             <h3 className="text-2xl font-bold mb-2">Recent Transactions</h3>
                             <ul className="space-y-4">
                                 {transactions.length > 0 ? (
@@ -181,7 +234,7 @@ const TransactionPage = () => {
                             </ul>
                         </div>
                         {/* Financial Goals Section */}
-                        <div className="p-6 rounded-2xl h-[40%]">
+                        <div className="p-6 -ml-3 mr-7 md:mr-0 md:ml-0 rounded-2xl h-[40%]">
                             <h3 className="text-xl font-bold mb-1">Financial Goals</h3>
                             <ul className="space-y-3">
                                 {recentGoals.length > 0 ? (
@@ -190,7 +243,7 @@ const TransactionPage = () => {
                                             key={`${goal.goalTitle}-${goal.targetDate}-${index}`}
                                             className="bg-white rounded-2xl shadow-md p-2 flex items-center justify-between relative"
                                             style={{
-                                                
+
                                                 background: `linear-gradient(90deg, rgba(173, 216, 230, 1) ${calculateProgress(goal.targetAmount)}%, white 0%)`,
                                             }}
                                         >
