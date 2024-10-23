@@ -45,7 +45,7 @@ function Home() {
       </div>
 
       {/* Second Division */}
-      <div className='bg-gradient-to-r from-[#4688ce] to-[#ffffff] max-h-screen py-12 lg:py-0'>
+      <div className='bg-gradient-to-r from-[#4688ce] to-[#ffffff] lg:min-h-screen max-h-screen py-12 lg:py-0'>
         <div className='flex flex-col  lg:flex-row px-4 lg:pr-8 justify-between lg:space-x-10'>
           <div className="w-full mt-20 lg:mt-24 flex justify-center overflow-hidden items-center">
             <img src={Expense} alt="Dashboard Preview" className="w-full h-auto lg:h-[70vh] rounded-xl lg:rounded-r-xl lg:-left-12" />
@@ -65,7 +65,7 @@ function Home() {
       </div>
 
       {/* Third Division */}
-      <div className='bg-gradient-to-r from-[#ffffff] to-[#a3e080] max-h-screen py-12 lg:py-0'>
+      <div className='bg-gradient-to-r from-[#ffffff] to-[#a3e080] lg:min-h-screen max-h-screen py-12 lg:py-0'>
         <div className='flex flex-col-reverse lg:flex-row px-4 lg:px-8 justify-between lg:space-x-10'>
           <div className='mt-8 lg:mt-36 w-full lg:max-w-[40vw] px-4 lg:px-5 text-center lg:text-left'>
             <h1 className='text-3xl lg:text-5xl mb-4 font-bold text-black'>Easily Track Your Incomes.</h1>
