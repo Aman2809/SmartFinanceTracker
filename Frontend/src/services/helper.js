@@ -3,7 +3,9 @@ import axios from "axios";
 
    export const BASE_URL = process.env.NODE_ENV === 'production' 
      ? '/api/v1/'
-     : 'http://financetracker.eu-north-1.elasticbeanstalk.com/api/v1/';
+     : 'http://financetracker.ap-south-1.elasticbeanstalk.com /api/v1/';
+
+  // export const BASE_URL = 'http://localhost:9292/api/v1/'
 
    export const myAxios = axios.create({
      baseURL: BASE_URL

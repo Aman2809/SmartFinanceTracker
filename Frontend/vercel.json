@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/api/:path*",
-        "destination": "http://financetracker.eu-north-1.elasticbeanstalk.com/api/:path*"
+        "destination": "http://financetracker.ap-south-1.elasticbeanstalk.com /api/:path*"
       }
     ]
   }
